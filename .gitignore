@@ -1,2 +1,5 @@
 # Don't commit .env
 */*.env
+
+.DS_Store
+.$arc.drawio.bkp
