@@ -5,19 +5,19 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="JmF7sgnx8N5SuLSKMq4n-1" value="VPC" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_vpc;strokeColor=#B6BABF;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#B6BABF;dashed=0;" vertex="1" parent="1">
-          <mxGeometry x="174" y="215" width="240" height="545" as="geometry" />
+          <mxGeometry x="160" y="320" width="200" height="400" as="geometry" />
         </mxCell>
         <mxCell id="JmF7sgnx8N5SuLSKMq4n-2" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.eks;" vertex="1" parent="1">
-          <mxGeometry x="215.5" y="601" width="78" height="78" as="geometry" />
+          <mxGeometry x="215.5" y="592" width="78" height="78" as="geometry" />
         </mxCell>
         <mxCell id="JmF7sgnx8N5SuLSKMq4n-3" value="" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.ecr;fillColor=#F58534;gradientColor=none;" vertex="1" parent="1">
-          <mxGeometry x="224.5" y="388" width="69" height="72" as="geometry" />
+          <mxGeometry x="220" y="424" width="69" height="72" as="geometry" />
         </mxCell>
         <mxCell id="JmF7sgnx8N5SuLSKMq4n-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="JmF7sgnx8N5SuLSKMq4n-4" target="JmF7sgnx8N5SuLSKMq4n-9">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="JmF7sgnx8N5SuLSKMq4n-4" value="" style="dashed=0;outlineConnect=0;html=1;align=center;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.webicons.github;gradientColor=#DFDEDE" vertex="1" parent="1">
-          <mxGeometry x="-330" y="410" width="102.4" height="102.4" as="geometry" />
+          <mxGeometry x="-310" y="358.8" width="102.4" height="102.4" as="geometry" />
         </mxCell>
         <mxCell id="JmF7sgnx8N5SuLSKMq4n-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="JmF7sgnx8N5SuLSKMq4n-5" target="JmF7sgnx8N5SuLSKMq4n-4">
           <mxGeometry relative="1" as="geometry" />
@@ -37,7 +37,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="JmF7sgnx8N5SuLSKMq4n-9" value="Build" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-150" y="460" width="120" height="60" as="geometry" />
+          <mxGeometry x="-100" y="430" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="JmF7sgnx8N5SuLSKMq4n-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="JmF7sgnx8N5SuLSKMq4n-4" target="JmF7sgnx8N5SuLSKMq4n-10">
           <mxGeometry relative="1" as="geometry">
@@ -46,7 +46,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="JmF7sgnx8N5SuLSKMq4n-10" value="Deploy" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-150" y="610" width="120" height="60" as="geometry" />
+          <mxGeometry x="-100" y="601" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

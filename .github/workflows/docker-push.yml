@@ -41,24 +41,42 @@ jobs:
                        -t mongodb-custom:v1.0.${{ github.run_number }} ./database # Build from the 'database' subfolder
 
       # Step 5: Scan the Docker image for vulnerabilities
-      - name: Scan Docker image for vulnerabilities
-        run: |
-          # Install Trivy
-          sudo apt-get update && sudo apt-get install -y wget apt-transport-https gnupg lsb-release bundler
-          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
-          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
-          sudo apt-get update
-          sudo apt-get install -y trivy
-
-          # Run Trivy scan
-          trivy image --format json --output trivy-report.json mongodb-custom:v1.0.${{ github.run_number }}
-
-      # Step 6: Upload the scan report as an artifact
-      - name: Upload Trivy scan report
-        uses: actions/upload-artifact@v3
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.20.0
         with:
-          name: trivy-report
-          path: trivy-report.json
+          image-ref: 'mongodb-custom:v1.0.${{ github.run_number }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      # - name: Run Trivy vulnerability scanner in fs mode
+      #   uses: aquasecurity/trivy-action@0.20.0
+      #   with:
+      #     scan-type: 'fs'
+      #     scan-ref: '.'
+      #     trivy-config: trivy.yaml
+
+
+      # - name: Scan Docker image for vulnerabilities
+      #   run: |
+      #     # Install Trivy
+      #     sudo apt-get update && sudo apt-get install -y wget apt-transport-https gnupg lsb-release bundler
+      #     wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+      #     echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+      #     sudo apt-get update
+      #     sudo apt-get install -y trivy
+
+      #     # Run Trivy scan
+      #     trivy image --format json --output trivy-report.json mongodb-custom:v1.0.${{ github.run_number }}
+
+      # # Step 6: Upload the scan report as an artifact
+      # - name: Upload Trivy scan report
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: trivy-report
+      #     path: trivy-report.json
 
       # Step 7: Tag the Docker image with the ECR repository URI
       - name: Tag Docker image
