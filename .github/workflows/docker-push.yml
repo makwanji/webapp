@@ -1,0 +1,68 @@
+name: Build and Push MongoDB Docker Image to AWS ECR
+
+on:
+  push:
+    branches:
+      - main  # You can change this to the branch where you want the action to trigger
+      - draft
+    paths:
+      - 'database/**'  # Triggers only if there are changes in the 'database' subfolder
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up AWS CLI
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # Step 3: Log in to AWS ECR
+      - name: Log in to Amazon ECR
+        id: ecr-login
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY_URI }}
+
+      # Step 4: Build the Docker image using the Dockerfile
+      - name: Build Docker image
+        run: |
+          docker build --build-arg MONGO_INITDB_ROOT_USERNAME=${{ secrets.MONGO_INITDB_ROOT_USERNAME }} \
+                       --build-arg MONGO_INITDB_ROOT_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }} \
+                       --build-arg MONGO_INITDB_DATABASE=${{ secrets.MONGO_INITDB_DATABASE }} \
+                       -t mongodb-custom:v1.0.${{ github.run_number }} ./database # Build from the 'database' subfolder
+
+      # Step 5: Scan the Docker image for vulnerabilities
+      - name: Scan Docker image for vulnerabilities
+        run: |
+          # Install Trivy
+          sudo apt-get update && sudo apt-get install -y trivy
+
+          # Run Trivy scan
+          trivy image --format json --output trivy-report.json mongodb-custom:v1.0.${{ github.run_number }}
+
+      # Step 6: Upload the scan report as an artifact
+      - name: Upload Trivy scan report
+        uses: actions/upload-artifact@v3
+        with:
+          name: trivy-report
+          path: trivy-report.json
+
+      # Step 7: Tag the Docker image with the ECR repository URI
+      - name: Tag Docker image
+        run: |
+          docker tag mongodb-custom:v1.0.${{ github.run_number }} ${{ secrets.ECR_REPOSITORY_URI }}:v1.0.${{ github.run_number }}
+
+      # Step 8: Push the Docker image to AWS ECR
+      - name: Push Docker image to ECR
+        run: |
+          docker push ${{ secrets.ECR_REPOSITORY_URI }}:v1.0.${{ github.run_number }}
+
