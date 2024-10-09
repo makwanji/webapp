@@ -59,10 +59,10 @@ jobs:
       # Step 7: Tag the Docker image with the ECR repository URI
       - name: Tag Docker image
         run: |
-          docker tag mongodb-custom:v1.0.${{ github.run_number }} ${{ secrets.ECR_REPOSITORY_URI }}:v1.0.${{ github.run_number }}
+          docker tag mongodb-custom:v1.0.${{ github.run_number }} ${{ secrets.ECR_REPOSITORY_URI }}/poc-cicd-ecr-db:v1.0.${{ github.run_number }}
 
       # Step 8: Push the Docker image to AWS ECR
       - name: Push Docker image to ECR
         run: |
-          docker push ${{ secrets.ECR_REPOSITORY_URI }}:v1.0.${{ github.run_number }}
+          docker push ${{ secrets.ECR_REPOSITORY_URI }}/poc-cicd-ecr-db:v1.0.${{ github.run_number }}
 
