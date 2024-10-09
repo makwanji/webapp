@@ -44,7 +44,11 @@ jobs:
       - name: Scan Docker image for vulnerabilities
         run: |
           # Install Trivy
-          sudo apt-get update && sudo apt-get install -y trivy
+          sudo apt-get update && sudo apt-get install -y wget apt-transport-https gnupg lsb-release bundler
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
 
           # Run Trivy scan
           trivy image --format json --output trivy-report.json mongodb-custom:v1.0.${{ github.run_number }}
