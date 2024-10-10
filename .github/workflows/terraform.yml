@@ -36,17 +36,17 @@ jobs:
         id: plan
         run: terraform plan -out=tfplan
 
-      # Step 6: Manual Approval Step
-      - name: Request Approval
-        id: approval
-        uses: rymes/approval-action@v1
-        with:
-          approvers: "makwanji"  # Specify approvers
-          comment: "Terraform plan is ready for approval."
+      # # Step 6: Manual Approval Step
+      # - name: Request Approval
+      #   id: approval
+      #   uses: rymes/approval-action@v1
+      #   with:
+      #     approvers: "makwanji"  # Specify approvers
+      #     comment: "Terraform plan is ready for approval."
 
       # Step 7: Terraform Apply (only if approved)
       - name: Terraform Apply
-        if: steps.approval.outputs.approved == 'true'
+        # if: steps.approval.outputs.approved == 'true'
         run: terraform apply -auto-approve tfplan
 
       # Step 8: Cleanup (optional)
