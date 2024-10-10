@@ -1,0 +1,33 @@
+1) create tables and sequences (Below is script for MS-SQL Database)
+
+create table mst_user
+( user_id bigint,
+  user_name varchar(50),
+  user_type char(1),
+  password varchar(500)
+  CONSTRAINT pk_user PRIMARY KEY (user_id)
+);
+
+create table mst_product
+( prod_id bigint,
+  prod_name varchar(50),
+  price numeric(10,2),
+  created_date datetime
+  CONSTRAINT pk_product PRIMARY KEY (prod_id)
+);
+
+create sequence sq_user_id start with 1 no cache;
+create sequence sq_prod_id start with 1 no cache;
+
+2) Set database details in .env file
+
+3) For postgresql database, need to change in backend\config\db.js file
+
+
+4) commands to run the api
+
+npm install
+
+npm run dev
+
+5) Load collection to check APIs in postman: webapp.postman_collection.json
