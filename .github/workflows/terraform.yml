@@ -17,6 +17,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - uses: actions/cache@v4
+        name: Cache plugin dir
+        with:
+          path: ~/.tflint.d/plugins
+          key: ubuntu-tflint-hcl${{ hashFiles('.tflint.hcl') }}
+
       # Step 2: Set up Terraform
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -25,16 +31,16 @@ jobs:
 
       # Step 3: Run Terraform format
       - name: Terraform Format
-        run: terraform fmt -check
+        run: terraform fmt -check terraform
 
-      # Step 4: Run Terraform lint (optional)
-      - name: Terraform Lint
-        run: terraform init && tflint
+      - name: TFLint version
+        run: tflint --version
 
-      # Step 5: Run Terraform plan
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -out=tfplan
+      - name: Init TFLint
+        run: cd terraform && tflint --init && cd ..
+
+      - name: Run TFLint
+        run: cd terraform && tflint -f compact --recursive && cd ..
 
       # # Step 6: Manual Approval Step
       # - name: Request Approval
@@ -45,10 +51,10 @@ jobs:
       #     comment: "Terraform plan is ready for approval."
 
       # Step 7: Terraform Apply (only if approved)
-      - name: Terraform Apply
-        # if: steps.approval.outputs.approved == 'true'
-        run: terraform apply -auto-approve tfplan
+      # - name: Terraform Apply
+      #   # if: steps.approval.outputs.approved == 'true'
+      #   run: terraform apply -auto-approve tfplan
 
-      # Step 8: Cleanup (optional)
-      - name: Cleanup
-        run: terraform workspace select default && terraform workspace delete -force non-production
+      # # Step 8: Cleanup (optional)
+      # - name: Cleanup
+      #   run: terraform workspace select default && terraform workspace delete -force non-production
