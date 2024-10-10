@@ -44,22 +44,13 @@ jobs:
       - name: Init TFLint
         run: cd terraform && tflint --init && cd ..
 
-      - name: Run TFLint
-        run: cd terraform && tflint -f compact --recursive --config "$(pwd)/.tflint.hcl && cd ..
+      - name: Terraform plan
+        # if: steps.approval.outputs.approved == 'true'
+        run: terraform plan
 
-      # # Step 6: Manual Approval Step
-      # - name: Request Approval
-      #   id: approval
-      #   uses: rymes/approval-action@v1
-      #   with:
-      #     approvers: "makwanji"  # Specify approvers
-      #     comment: "Terraform plan is ready for approval."
+      - name: Request Approval
+        run: exit 1
 
-      # Step 7: Terraform Apply (only if approved)
-      # - name: Terraform Apply
-      #   # if: steps.approval.outputs.approved == 'true'
-      #   run: terraform apply -auto-approve tfplan
-
-      # # Step 8: Cleanup (optional)
-      # - name: Cleanup
-      #   run: terraform workspace select default && terraform workspace delete -force non-production
+      - name: Terraform apply
+        # if: steps.approval.outputs.approved == 'true'
+        run: terraform apply -auto-approve tfplan
