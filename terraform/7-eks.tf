@@ -46,21 +46,21 @@ resource "aws_eks_cluster" "eks" {
 }
 
 resource "aws_eks_access_entry" "sso" {
-  cluster_name      = aws_eks_cluster.eks.name
-  principal_arn     = var.sso_principal_arn
+  cluster_name  = aws_eks_cluster.eks.name
+  principal_arn = var.sso_principal_arn
   # kubernetes_groups = ["group-1", "group-2"]
-  type              = "STANDARD"
+  type = "STANDARD"
 
   depends_on = [aws_eks_cluster.eks]
 }
 
 resource "aws_eks_access_policy_association" "sso" {
   cluster_name  = aws_eks_cluster.eks.name
-  policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
   principal_arn = var.sso_principal_arn
 
   access_scope {
-    type       = "cluster"
+    type = "cluster"
   }
 
   # force the creation of the entry before the creation of the policy
