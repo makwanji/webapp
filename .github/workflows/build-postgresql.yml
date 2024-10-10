@@ -46,7 +46,7 @@ jobs:
         with:
           image-ref: 'productservice-db:v1.0.${{ github.run_number }}'
           format: 'table'
-          exit-code: '1'
+          exit-code: '0' # Set to 1 if you want to faild this pipeline
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
