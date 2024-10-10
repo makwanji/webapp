@@ -1,0 +1,63 @@
+name: Build and Push ProductService - Frontend to ECR
+
+on:
+  push:
+    branches:
+      - main  # You can change this to the branch where you want the action to trigger
+      - draft
+    paths:
+      - 'frontend/**'  # Triggers only if there are changes in the 'frontend' subfolder
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up AWS CLI
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # Step 3: Log in to AWS ECR
+      - name: Log in to Amazon ECR
+        id: ecr-login
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY_URI }}
+
+      # Step 4: Build the Docker image using the Dockerfile
+      - name: Build Docker image
+        run: |
+          docker build --build-arg POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
+                       --build-arg POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+                       --build-arg POSTGRES_DB=${{ secrets.POSTGRES_DB }} \
+                       -t productservice-web:v1.0.${{ github.run_number }} ./frontend # Build from the 'frontend' subfolder
+
+      # Step 5: Scan the Docker image for vulnerabilities
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: 'productservice-web:v1.0.${{ github.run_number }}'
+          format: 'table'
+          exit-code: '0' # Set to 1 if you want to faild this pipeline
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      # Step 7: Tag the Docker image with the ECR repository URI
+      - name: Tag Docker image
+        run: |
+          docker tag productservice-web:v1.0.${{ github.run_number }} ${{ secrets.ECR_REPOSITORY_URI }}/productservice-web:v1.0.${{ github.run_number }}
+
+      # Step 8: Push the Docker image to AWS ECR
+      - name: Push Docker image to ECR
+        run: |
+          docker push ${{ secrets.ECR_REPOSITORY_URI }}/productservice-web:v1.0.${{ github.run_number }}
+
