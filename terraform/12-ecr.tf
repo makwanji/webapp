@@ -1,21 +1,21 @@
-resource "awscc_ecr_repository" "poc-cicd-ecr-db" {
-  repository_name      = "poc-cicd-ecr-db"
+resource "awscc_ecr_repository" "productservice-db" {
+  repository_name      = "productservice-db"
   image_tag_mutability = "MUTABLE"
   image_scanning_configuration = {
     scan_on_push = true
   }
 }
 
-resource "awscc_ecr_repository" "poc-cicd-ecr-app" {
-  repository_name      = "poc-cicd-ecr-app"
+resource "awscc_ecr_repository" "productservice-app" {
+  repository_name      = "productservice-app"
   image_tag_mutability = "MUTABLE"
   image_scanning_configuration = {
     scan_on_push = true
   }
 }
 
-resource "awscc_ecr_repository" "poc-cicd-ecr-web" {
-  repository_name      = "poc-cicd-ecr-web"
+resource "awscc_ecr_repository" "productservice-web" {
+  repository_name      = "productservice-web"
   image_tag_mutability = "MUTABLE"
   image_scanning_configuration = {
     scan_on_push = true

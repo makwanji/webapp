@@ -42,3 +42,9 @@
 2. Create a new branch for your feature or bugfix.
 3. Create a Pull Request to the `main` branch.
 
+
+# DB Build failed - image issue
+https://github.com/makwanji/webapp/actions/runs/11266635667
+
+# DB Build success
+https://github.com/makwanji/webapp/actions/runs/11266665893
