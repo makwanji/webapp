@@ -1,23 +1,17 @@
 # Use MongoDB official image as the base image
-FROM mongo:6.0.1
+FROM postgres:15.0
 
 # Accept build arguments and set them as environment variables
-ARG MONGO_INITDB_ROOT_USERNAME
-ARG MONGO_INITDB_ROOT_PASSWORD
-ARG MONGO_INITDB_DATABASE
+ARG POSTGRES_USER
+ARG POSTGRES_PASSWORD
+ARG POSTGRES_DB
 
-ENV MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-ENV MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-ENV MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+ENV POSTGRES_USER=${POSTGRES_USER}
+ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+ENV POSTGRES_DB=${POSTGRES_DB}
 
-# Add a custom MongoDB configuration file
-COPY mongod.conf /etc/mongo/mongod.conf
+# Copy the initialization SQL script into the container
+COPY ./init-db.sql /docker-entrypoint-initdb.d/
 
-# Add MongoDB initialization scripts (for creating collections, adding initial data)
-COPY init-mongo.sh /docker-entrypoint-initdb.d/
-
-# Expose the default MongoDB port
-EXPOSE 27017
-
-# Command to start MongoDB
-CMD ["mongod"]
+# Expose the PostgreSQL port (5432 by default)
+EXPOSE 5432

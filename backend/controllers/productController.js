@@ -1,19 +1,23 @@
-const sql = require('mssql');
-const jwt = require('jsonwebtoken');
-const { createProduct } = require('../models/productModel');
+const db = require('../models');
 
-// Add product
-const addProduct = async (req, res) => {
-  const { prod_name, price } = req.body;
-  await createProduct(prod_name, price);
-  res.status(201).json({ message: 'Product added successfully' });
+exports.getProducts = async (req, res) => {
+  try {
+    const products = await db.Product.findAll();
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
-// List products
-const listProducts = async (req, res) => {
-  const query = 'select * from mst_product';
-  const result = await new sql.Request().query(query);
-  res.json(result.recordset);
+exports.getProduct = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await db.Product.findByPk(id);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
-
-module.exports = { addProduct, listProducts };

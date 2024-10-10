@@ -1,13 +1,11 @@
 #!/bin/bash
+docker build --build-arg POSTGRES_USER=${POSTGRES_USER} \
+  --build-arg POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
+  --build-arg POSTGRES_DB=${POSTGRES_DB} \
+  -t webapp-postgres:v0.0.1 .
 
-docker run -d -p 27017:27017 --name mongodb_container \
-  -e MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME \
-  -e MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD \
-  -e MONGO_INITDB_DATABASE=$MONGO_INITDB_DATABASE \
-  your_dockerhub_username/mongodb-custom:latest
-
-docker run --name mongodb -d -p 27017:27017 \
-  -e MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME \
-  -e MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD \
-  -e MONGO_INITDB_DATABASE=$MONGO_INITDB_DATABASE \
-  mongodb/mongodb-community-server:$MONGODB_VERSION
+docker run -e POSTGRES_USER=${POSTGRES_USER} \
+  -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
+  -e POSTGRES_DB=${POSTGRES_DB} \
+  -p 5432:5432 \
+  webapp-postgres:v0.0.1
