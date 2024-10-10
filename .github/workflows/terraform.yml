@@ -29,6 +29,11 @@ jobs:
         with:
           terraform_version: 1.0.0  # Specify your Terraform version here
 
+      - uses: terraform-linters/setup-tflint@v4
+        name: Setup TFLint
+        with:
+          tflint_version: v0.52.0
+
       # Step 3: Run Terraform format
       - name: Terraform Format
         run: terraform fmt -check terraform
