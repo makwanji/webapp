@@ -1,4 +1,4 @@
-# Use MongoDB official image as the base image
+# Use postgres official image as the base image
 FROM postgres:15.0
 
 # Accept build arguments and set them as environment variables
