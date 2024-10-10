@@ -44,13 +44,16 @@ jobs:
       - name: Init TFLint
         run: cd terraform && tflint --init && cd ..
 
-      - name: Terraform plan
-        # if: steps.approval.outputs.approved == 'true'
-        run: terraform plan
+      - name: Init TFLint
+        run: cd terraform && tflint --init && cd ..
 
-      - name: Request Approval
-        run: exit 1
+      # - name: Terraform plan
+      #   # if: steps.approval.outputs.approved == 'true'
+      #   run: terraform plan
 
-      - name: Terraform apply
-        # if: steps.approval.outputs.approved == 'true'
-        run: terraform apply -auto-approve tfplan
+      # - name: Request Approval
+      #   run: exit 1
+
+      # - name: Terraform apply
+      #   # if: steps.approval.outputs.approved == 'true'
+      #   run: terraform apply -auto-approve tfplan
