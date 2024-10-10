@@ -45,7 +45,7 @@ jobs:
         run: cd terraform && tflint --init && cd ..
 
       - name: Run TFLint
-        run: cd terraform && tflint -f compact --recursive && cd ..
+        run: cd terraform && tflint -f compact --recursive --config "$(pwd)/.tflint.hcl && cd ..
 
       # # Step 6: Manual Approval Step
       # - name: Request Approval

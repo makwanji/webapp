@@ -1,0 +1,5 @@
+format: json
+exit-code: 0 # Set 1 if you want to stop pipeline
+severity: CRITICAL
+secret:
+  config: config/trivy/secret.yaml
