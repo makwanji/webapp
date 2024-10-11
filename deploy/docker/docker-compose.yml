@@ -16,6 +16,15 @@ services:
     depends_on:
       - postgres
 
+  frontend:
+    image: webapp-front:v0.0.1
+    container_name: frontend
+    ports:
+      - '80:80'
+    environment:
+      REACT_APP_API_URL: http://54.255.190.48:5002
+    depends_on:
+      - backend
 
   postgres:
     image: webapp-postgres:v0.0.1

@@ -13,23 +13,37 @@ function Login({ onLoginSuccess }) {
         username,
         password,
       });
+      console.log('data-->' + response.data);
 
-      if (response.data) {
-        if (response.data.token) {
-          // Store the token in localStorage
-          localStorage.setItem('authToken', response.data.token);
+      if (response.data && response.data.token) {
+        // Store the token in localStorage
+        localStorage.setItem('authToken', response.data.token);
 
-          // Call the onLoginSuccess function to switch to the product screen
-          onLoginSuccess();
-        } else {
-          setError('Invalid credentials');
-        }
+        // Call the onLoginSuccess function to switch to the product screen
+        onLoginSuccess();
+      } else {
+        setError('Invalid credentials');
       }
-    } catch (err) {
-      setError('Error connecting to API');
-    }
 
+    } catch (err) {
+      // Check if the error is a server error or network-related
+      if (err.response) {
+        // Server responded with a status other than 2xx
+        if (err.response.status === 401) {
+          setError('Invalid credentials'); // Unauthorized, usually means bad login
+        } else {
+          setError(`Error: ${err.response.data.message || 'Something went wrong'}`);
+        }
+      } else if (err.request) {
+        // No response received, possible network issue
+        setError('Network error: Could not connect to the API');
+      } else {
+        // Any other error
+        setError(`Error: ${err.message}`);
+      }
+    }
   };
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
