@@ -12,8 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    needs: test
-
     steps:
       # Step 1: Checkout the code from the repository
       - name: Checkout code
