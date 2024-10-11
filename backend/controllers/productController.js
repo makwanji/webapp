@@ -1,23 +1,42 @@
-const db = require('../models');
+const { Product } = require('../models');
 
-exports.getProducts = async (req, res) => {
+const addProduct = async (req, res) => {
+  const { name, price } = req.body;
+
   try {
-    const products = await db.Product.findAll();
-    res.json(products);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    await Product.create({ name, price });
+    res.status(201).json({ message: 'Product added successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
-exports.getProduct = async (req, res) => {
-  const { id } = req.params;
+const listProducts = async (req, res) => {
   try {
-    const product = await db.Product.findByPk(id);
+    const products = await Product.findAll();
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const getProduct = async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+
+  try {
+    const product = await Product.findByPk(id);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    res.json(product);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
   }
+};
+
+module.exports = {
+  addProduct,
+  listProducts,
+  getProduct,
 };

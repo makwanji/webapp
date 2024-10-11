@@ -1,18 +1,21 @@
-require('dotenv').config();
 const express = require('express');
-const db = require('./models');
+const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
+const db = require('./models');
+
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 3000;
+
 app.use(express.json());
 
-app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api', productRoutes);
 
 db.sequelize.sync().then(() => {
-  console.log('Database synchronized');
-  app.listen(3000, () => {
-    console.log('Server running on port 3000');
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
   });
 });
