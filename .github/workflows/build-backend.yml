@@ -77,16 +77,17 @@ jobs:
       - name: Check for vulnerable packages using npm audit
         run: cd backend && npm audit --audit-level=high && cd ..
 
-      - name: OWASP Dependency Check
-        run: exit 0
-
-      # # OWASP Dependency-Check scan for vulnerabilities
       # - name: OWASP Dependency Check
-      #   uses: dependency-check/Dependency-Check_Action@main
-      #   with:
-      #     format: 'HTML'
-      #     outputDirectory: './dependency-check-report'
-      #     scanPath: './backend'
+      #   run: exit 0
+
+      # OWASP Dependency-Check scan for vulnerabilities
+      - name: OWASP Dependency Check
+        id: Depcheck
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          format: 'HTML'
+          outputDirectory: './dependency-check-report'
+          scanPath: './backend'
 
       # - name: Upload dependency check report
       #   uses: actions/upload-artifact@v3
