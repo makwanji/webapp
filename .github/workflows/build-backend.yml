@@ -148,20 +148,20 @@ jobs:
         run: |
           docker push ${{ secrets.ECR_REPOSITORY_URI }}/productservice-app:v1.0.${{ github.run_number }}
 
-  deploy:
-    name: Deploy Application
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  # deploy:
+  #   name: Deploy Application
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
 
-      # Deploy to Kubernetes cluster
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v1
-        with:
-          version: 'latest'
+  #     # Deploy to Kubernetes cluster
+  #     - name: Set up kubectl
+  #       uses: azure/setup-kubectl@v1
+  #       with:
+  #         version: 'latest'
 
-      - name: Deploy to Kubernetes
-        run: |
-          kubectl apply -f k8s/deployment.yaml
+  #     - name: Deploy to Kubernetes
+  #       run: |
+  #         kubectl apply -f k8s/deployment.yaml
