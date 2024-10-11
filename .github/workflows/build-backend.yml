@@ -1,4 +1,4 @@
-name: Build and Push ProductService - API to ECR
+name: DevSecOps CI ProductService - API
 
 on:
   push:
@@ -10,6 +10,25 @@ on:
   workflow_dispatch:
 
 jobs:
+  sast:
+    name: SAST - Static Code Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Run ESLint or other static analysis tool
+      - name: Run ESLint for code linting and basic vulnerability detection
+        run: npm install && npx eslint .
+
+      # Optional: You can add other SAST tools like SonarQube or Semgrep for more in-depth scanning
+      - name: Semgrep Security Scan
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: p/ci # Use the pre-configured rules for CI/CD
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build:
     runs-on: ubuntu-latest
 
