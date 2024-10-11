@@ -17,42 +17,42 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # - uses: actions/cache@v4
-      #   name: Cache plugin dir
-      #   with:
-      #     path: ~/.tflint.d/plugins
-      #     key: ubuntu-tflint-hcl${{ hashFiles('.tflint.hcl') }}
+      - uses: actions/cache@v4
+        name: Cache plugin dir
+        with:
+          path: ~/.tflint.d/plugins
+          key: ubuntu-tflint-hcl${{ hashFiles('.tflint.hcl') }}
 
-      # # Step 2: Set up Terraform
-      # - name: Set up Terraform
-      #   uses: hashicorp/setup-terraform@v3
-      #   with:
-      #     terraform_version: 1.0.0  # Specify your Terraform version here
+      # Step 2: Set up Terraform
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.0.0  # Specify your Terraform version here
 
-      # - uses: terraform-linters/setup-tflint@v4
-      #   name: Setup TFLint
-      #   with:
-      #     tflint_version: v0.52.0
+      - uses: terraform-linters/setup-tflint@v4
+        name: Setup TFLint
+        with:
+          tflint_version: v0.52.0
 
-      # # Step 3: Run Terraform format
-      # - name: Terraform Format
-      #   run: terraform fmt -check terraform
+      # Step 3: Run Terraform format
+      - name: Terraform Format
+        run: terraform fmt -check terraform
 
-      # - name: TFLint version
-      #   run: tflint --version
+      - name: TFLint version
+        run: tflint --version
 
-      # - name: Init TFLint
-      #   run: cd terraform && tflint --init && cd ..
+      - name: Init TFLint
+        run: cd terraform && tflint --init && cd ..
 
-      # - name: Init TFLint
-      #   run: cd terraform && tflint --init && cd ..
+      - name: Init TFLint
+        run: cd terraform && tflint --init && cd ..
 
-      # - name: Terraform plan
-      #   run: echo "plan"
+      - name: Terraform plan
+        run: echo "plan"
 
-      # - name: Request Approval
-      #   run: echo "Request Approval"
+      - name: Request Approval
+        run: echo "Request Approval"
 
-      # - name: Terraform apply
-      #   # if: steps.approval.outputs.approved == 'true'
-      #   run: echo "apply"
+      - name: Terraform apply
+        # if: steps.approval.outputs.approved == 'true'
+        run: echo "apply"

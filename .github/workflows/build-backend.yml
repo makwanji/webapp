@@ -42,11 +42,11 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm ci
+        run: cd backend && npm ci && cd ..
 
       # Check for vulnerabilities in node_modules using npm audit
       - name: Check for vulnerable packages using npm audit
-        run: npm audit --audit-level=high
+        run: cd backend && npm audit --audit-level=high && cd ..
 
       # # OWASP Dependency-Check scan for vulnerabilities
       # - name: OWASP Dependency Check
