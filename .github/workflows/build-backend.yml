@@ -93,11 +93,11 @@ jobs:
             --failOnCVSS 7
             --enableRetired
 
-      # - name: Upload dependency check report
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: dependency-check-report
-      #     path: dependency-check-report/dependency-check-report.html
+      - name: Upload dependency check report
+        uses: actions/upload-artifact@v3
+        with:
+          name: dependency-check-report
+          path: dependency-check-report/dependency-check-report.html
 
   test:
     name: Run Unit and Integration Tests
