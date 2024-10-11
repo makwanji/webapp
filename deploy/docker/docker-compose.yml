@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  backend:
+    image: webapp-back:v0.0.2
+    container_name: backend
+    ports:
+      - '5002:5002'
+    environment:
+      DB_SERVER: postgres
+      JWT_SECRET: 'testwebapp123'
+      POSTGRES_DB: webapp
+      POSTGRES_USER: 'admin'
+      POSTGRES_PASSWORD: 'admin123'
+      DB_PORT: 5432
+      PORT: 5002
+    depends_on:
+      - postgres
+
+
+  postgres:
+    image: webapp-postgres:v0.0.1
+    container_name: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: webapp # This can be one of the microservice databases
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
