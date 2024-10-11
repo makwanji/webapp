@@ -124,7 +124,7 @@ jobs:
         run: exit 0
 
   docker:
-    name: Build and push Docker Image
+    name: Build, Scan and Publish Image
     runs-on: ubuntu-latest
     needs: test
 
