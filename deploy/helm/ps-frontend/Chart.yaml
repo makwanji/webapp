@@ -1,0 +1,4 @@
+apiVersion: v2
+description: A Helm chart for deploying ps-frontend application
+name: ps-frontend
+version: 1.0.0

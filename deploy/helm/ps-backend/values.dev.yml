@@ -1,0 +1,36 @@
+environment: "dev"
+app:
+  name: ps-backend
+replicas: 1
+image:
+  # repository: ${{ secrets.ECR_REPOSITORY_URI }}/productservice-app:v1.0.${{ github.run_number }}
+  # tag: latest
+  repository: makwanji/productservice-app
+  tag: v1.0.0
+  pullPolicy: Always
+podSecurityContext:
+  runAsUser: 1000690000
+  runAsGroup: 1000690000
+securityContext:
+  allowPrivilegeEscalation: false
+  runAsNonRoot: true
+  capabilities:
+    drop: ["ALL"]
+  seccompProfile:
+    type: RuntimeDefault
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1000Mi
+  requests:
+    cpu: 100m
+    memory: 500Mi
+readinessProbe:
+  initialDelaySeconds: 20
+  timeoutSeconds: 5
+livenessProbe:
+  initialDelaySeconds: 20
+  timeoutSeconds: 5
+config:
+  secret: ps-backend
+appport: 5001
