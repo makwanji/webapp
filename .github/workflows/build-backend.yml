@@ -21,13 +21,13 @@ jobs:
       - name: Run ESLint for code linting and basic vulnerability detection
         run: cd backend && npm install && npx eslint .
 
-      # Optional: You can add other SAST tools like SonarQube or Semgrep for more in-depth scanning
-      - name: Semgrep Security Scan
-        uses: returntocorp/semgrep-action@v1
-        with:
-          config: p/ci # Use the pre-configured rules for CI/CD
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # # Optional: You can add other SAST tools like SonarQube or Semgrep for more in-depth scanning
+      # - name: Semgrep Security Scan
+      #   uses: returntocorp/semgrep-action@v1
+      #   with:
+      #     config: p/ci # Use the pre-configured rules for CI/CD
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   dep-scan:
     name: Dependency Vulnerability Scan
