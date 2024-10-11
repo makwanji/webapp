@@ -8,23 +8,27 @@ function Login({ onLoginSuccess }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    onLoginSuccess();
-    // try {
-    //   const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, {
-    //     username,
-    //     password
-    //   });
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+        username,
+        password,
+      });
 
+      if (response.data) {
+        if (response.data.token) {
+          // Store the token in localStorage
+          localStorage.setItem('authToken', response.data.token);
 
+          // Call the onLoginSuccess function to switch to the product screen
+          onLoginSuccess();
+        } else {
+          setError('Invalid credentials');
+        }
+      }
+    } catch (err) {
+      setError('Error connecting to API');
+    }
 
-    //   if (response.data.success) {
-    //     onLoginSuccess();
-    //   } else {
-    //     setError('Invalid credentials');
-    //   }
-    // } catch (err) {
-    //   setError('Error connecting to API');
-    // }
   };
 
   return (

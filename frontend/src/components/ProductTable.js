@@ -1,39 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-// function ProductTable() {
-//   const [products, setProducts] = useState([]);
-
-
-//   useEffect(() => {
-//     const fetchProducts = async () => {
-
-//       try {
-//         const response = await axios.get(`${process.env.REACT_APP_API_URL}/products`);
-//         setProducts(response.data);
-//       } catch (error) {
-//         console.error('Error fetching products:', error);
-//       }
-//     };
-
-//     fetchProducts();
-//   }, []);
-
 function ProductTable() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    // Simulating an API response with mock data
-    const mockProducts = [
-      { id: 1, name: 'Product 1', price: 100 },
-      { id: 2, name: 'Product 2', price: 150 },
-      { id: 3, name: 'Product 3', price: 200 },
-      { id: 4, name: 'Product 4', price: 250 },
-      { id: 5, name: 'Product 5', price: 300 }
-    ];
+    const fetchProducts = async () => {
+      try {
+        // Retrieve the token from localStorage
+        const token = localStorage.getItem('authToken');
 
-    // Setting the mock data to the state
-    setProducts(mockProducts);
+        // Add the token to the Authorization header
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/products`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   return (
