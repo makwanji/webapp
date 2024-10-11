@@ -3,8 +3,6 @@ app:
   name: ps-backend
 replicas: 1
 image:
-  # repository: ${{ secrets.ECR_REPOSITORY_URI }}/productservice-app:v1.0.${{ github.run_number }}
-  # tag: latest
   repository: makwanji/productservice-app
   tag: v1.0.0
   pullPolicy: Always
