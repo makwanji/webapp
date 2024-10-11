@@ -22,6 +22,12 @@ jobs:
         run: cd backend && npm install && npx eslint .
 
       # Optional: You can add other SAST tools like SonarQube or Semgrep for more in-depth scanning
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v3.0.0
+        with:
+          projectBaseDir: backend
+
+      # Optional: You can add other SAST tools like SonarQube or Semgrep for more in-depth scanning
       - name: Semgrep Security Scan
         uses: returntocorp/semgrep-action@v1
         with:
@@ -32,6 +38,7 @@ jobs:
   dep-scan:
     name: Dependency Vulnerability Scan
     runs-on: ubuntu-latest
+    needs: sast
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
