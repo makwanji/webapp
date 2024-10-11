@@ -19,7 +19,7 @@ jobs:
 
       # Run ESLint or other static analysis tool
       - name: Run ESLint for code linting and basic vulnerability detection
-        run: npm install && npx eslint .
+        run: cd backend && npm install && npx eslint .
 
       # Optional: You can add other SAST tools like SonarQube or Semgrep for more in-depth scanning
       - name: Semgrep Security Scan
