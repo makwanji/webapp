@@ -85,6 +85,7 @@ jobs:
         id: Depcheck
         uses: dependency-check/Dependency-Check_Action@main
         with:
+          project: 'ProductServiceAPI'
           format: 'HTML'
           out: './dependency-check-report'
           path: './backend'
