@@ -21,13 +21,13 @@ jobs:
       - name: Run ESLint for code linting and basic vulnerability detection
         run: cd backend && npm install && npx eslint .
 
-      # # Optional: You can add other SAST tools like SonarQube or Semgrep for more in-depth scanning
-      # - name: Semgrep Security Scan
-      #   uses: returntocorp/semgrep-action@v1
-      #   with:
-      #     config: p/ci # Use the pre-configured rules for CI/CD
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Optional: You can add other SAST tools like SonarQube or Semgrep for more in-depth scanning
+      - name: Semgrep Security Scan
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: p/ci # Use the pre-configured rules for CI/CD
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   dep-scan:
     name: Dependency Vulnerability Scan
@@ -48,19 +48,19 @@ jobs:
       - name: Check for vulnerable packages using npm audit
         run: npm audit --audit-level=high
 
-      # OWASP Dependency-Check scan for vulnerabilities
-      - name: OWASP Dependency Check
-        uses: dependency-check-action@v2
-        with:
-          format: 'HTML'
-          outputDirectory: './dependency-check-report'
-          scanPath: './backend'
+      # # OWASP Dependency-Check scan for vulnerabilities
+      # - name: OWASP Dependency Check
+      #   uses: dependency-check-action@v2
+      #   with:
+      #     format: 'HTML'
+      #     outputDirectory: './dependency-check-report'
+      #     scanPath: './backend'
 
-      - name: Upload dependency check report
-        uses: actions/upload-artifact@v3
-        with:
-          name: dependency-check-report
-          path: dependency-check-report/dependency-check-report.html
+      # - name: Upload dependency check report
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: dependency-check-report
+      #     path: dependency-check-report/dependency-check-report.html
 
   # test:
   #   name: Run Unit and Integration Tests
