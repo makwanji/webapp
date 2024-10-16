@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: ps
+  name: ps
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-southeast-1:851725219470:certificate/439dc4c8-c436-49d0-a9c5-c5ab226011fc
+    alb.ingress.kubernetes.io/successCodes: "200,201,202,204,206,302"
+spec:
+  ingressClassName: alb
+  rules:
+    - host: psdemo.adnovumlabs.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ps-frontend-service
+                port:
+                  number: 80
+          - path: /backend
+            pathType: Prefix
+            backend:
+              service:
+                name: ps-backend-service
+                port:
+                  number: 5001
