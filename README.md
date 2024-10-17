@@ -6,16 +6,17 @@
 [![Test Status](https://github.com/makwanji/webapp/workflows/Test/badge.svg)](https://github.com/makwanji/webapp/actions)
 
 
+## Access application
+http://psdemo.adnovumlabs.com/
+
+
 ## Tech Stack
 
 | Technology         | Description                                      |
 |--------------------|--------------------------------------------------|
-| **Java**           | Programming language for the API.                |
-| **Spring Boot**    | Framework used to build the RESTful service.     |
-| **Spring Data JPA**| ORM framework for interacting with the database. |
-| **JWT/OAuth**      | Authentication for securing API endpoints.       |
-| **Maven**          | Build tool used for dependency management.       |
-| **Jackson**        | JSON parsing library to read the JSON file.      |
+| Node.JS | |
+| React.JS | |
+| PostgreSQL Database | |
 
 
 ## Running the Application

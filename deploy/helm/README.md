@@ -8,9 +8,6 @@ kubectl create secret generic ps-backend -n ps --from-env-file=/Users/jig/code/j
 kubectl create secret generic ps-database -n ps --from-env-file=/Users/jig/code/jig/webapp/database/.env
 kubectl create secret generic ps-frontend -n ps --from-env-file=/Users/jig/code/jig/webapp/frontend/.env
 ```
-database
-
-frontend
 
 
 ## 2. helm deployment (ps-database)
