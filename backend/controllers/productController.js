@@ -11,7 +11,7 @@ const addProduct = async (req, res) => {
   }
 };
 
-const listProducts = async (req, res) => {
+const getProducts = async (req, res) => {
   try {
     const products = await Product.findAll();
     res.status(200).json(products);
@@ -37,6 +37,6 @@ const getProduct = async (req, res) => {
 
 module.exports = {
   addProduct,
-  listProducts,
+  getProducts,
   getProduct,
 };
