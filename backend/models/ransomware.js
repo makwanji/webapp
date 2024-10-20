@@ -6,55 +6,55 @@ module.exports = (sequelize, DataTypes) => {
     },
     extensions: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     extensionPattern: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     ransomNoteFilenames: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     comment: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     encryptionAlgorithm: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     decryptor: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     resources: {
       type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: false,
+      allowNull: true,
     },
     screenshots: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     microsoftDetectionName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     microsoftInfo: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     sandbox: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     iocs: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     snort: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     }
   });
 
