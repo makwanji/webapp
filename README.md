@@ -37,6 +37,10 @@ gitleaks dir backend
 gitleaks dir frontend
 ```
 
+## MongoDB Database
+
+https://cloud.mongodb.com/v2/65b88883da738f151be68115#/clusters
+
 
 ## Running the Application
 

@@ -1,0 +1,43 @@
+[
+  {
+    "name": [
+      ".CryptoHasYou."
+    ],
+    "extensions": ".enc",
+    "extensionPattern": "",
+    "ransomNoteFilenames": " YOUR_FILES_ARE_LOCKED.txt",
+    "comment": "",
+    "encryptionAlgorithm": "AES(256)",
+    "decryptor": "",
+    "resources": [
+      "http://www.nyxbone.com/malware/CryptoHasYou.html"
+    ],
+    "screenshots": "",
+    "microsoftDetectionName": "Trojan:Win32/Dynamer!ac",
+    "microsoftInfo": "https://www.microsoft.com/security/portal/threat/encyclopedia/entry.aspx?Name=Trojan%3AWin32%2FDynamer!ac",
+    "sandbox": "https://www.hybrid-analysis.com/sample/afd3394fb538b36d20085504b86000ea3969e0ae5da8e0c058801020ec8da67c?environmentId=4",
+    "iocs": "https://otx.alienvault.com/pulse/57180b18c1492d015c14bed8/",
+    "snort": ""
+  },
+  {
+    "name": [
+      "777",
+      "Sevleg"
+    ],
+    "extensions": ".777",
+    "extensionPattern": "._[timestamp]_$[email]$.777\ne.g. ._14-05-2016-11-59-36_$ninja.gaiver@aol.com$.777",
+    "ransomNoteFilenames": "read_this_file.txt",
+    "comment": "",
+    "encryptionAlgorithm": "XOR",
+    "decryptor": "",
+    "resources": [
+      "https://decrypter.emsisoft.com/777"
+    ],
+    "screenshots": "",
+    "microsoftDetectionName": "Ransom:Win32/Empercrypt.A",
+    "microsoftInfo": "https://www.microsoft.com/security/portal/threat/Encyclopedia/Entry.aspx?Name=Ransom:Win32/Empercrypt.A",
+    "sandbox": "https://www.hybrid-analysis.com/sample/2955d081ed9bca764f5037728125a7487f29925956f3095c58035919d50290b5?environmentId=4",
+    "iocs": "https://otx.alienvault.com/pulse/573b02701116a040ceccdd85/",
+    "snort": ""
+  }
+]
