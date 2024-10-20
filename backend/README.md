@@ -1,1 +1,7 @@
-Test API in Node.js
+# Backend Application
+
+## Start app
+
+```bash
+node app.js
+```

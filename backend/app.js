@@ -17,7 +17,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api', productRoutes);
 
-db.sequelize.sync().then(() => {
+db.sequelize.sync({ alter: true }).then(() => {
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });

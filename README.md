@@ -19,6 +19,25 @@ http://psdemo.adnovumlabs.com/
 | PostgreSQL Database | |
 
 
+## Secret scan
+
+| Technology         | Description                                      |
+|--------------------|--------------------------------------------------|
+| trufflehog | https://github.com/trufflesecurity/trufflehog |
+| gitleaks | https://github.com/gitleaks/gitleaks |
+
+- trufflehog : scan code
+```bash
+trufflehog filesystem .
+```
+
+- gitleaks : scan code
+```bash
+gitleaks dir backend
+gitleaks dir frontend
+```
+
+
 ## Running the Application
 
 1. Clone the repository:
