@@ -8,7 +8,8 @@ function ProductTable() {
     const fetchProducts = async () => {
       try {
         // Retrieve the token from localStorage
-        const token = localStorage.getItem('authToken');
+        const token = localStorage.getItem('accessToken');
+
 
         // Add the token to the Authorization header
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/products`, {

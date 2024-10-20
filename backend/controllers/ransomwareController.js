@@ -9,10 +9,8 @@ const loadRansomware = async (req, res) => {
 
     console.log(ransomwareData);
 
-    // Iterate and insert/update records
     for (let record of ransomwareData) {
       try {
-        // Use upsert to insert or update based on 'name' field
         await Ransomware.upsert({
           name: record.name,
           extensions: record.extensions,
@@ -47,9 +45,6 @@ const loadRansomware = async (req, res) => {
 
   } catch (error) {
     console.error(`Error fetching data: ${error.message}`);
-  } finally {
-    // Close the database connection after the process is complete
-    // await sequelize.close();
   }
 };
 

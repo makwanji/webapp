@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../utils/axios';
 
 function Login({ onLoginSuccess }) {
   const [username, setUsername] = useState('');
@@ -9,17 +10,16 @@ function Login({ onLoginSuccess }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+      const response = await axios.post(`/api/auth/login`, {
         username,
         password,
       });
-      console.log('data-->' + response.data);
+      console.log('data-->' + response.data.accessToken);
 
-      if (response.data && response.data.token) {
-        // Store the token in localStorage
-        localStorage.setItem('authToken', response.data.token);
+      if (response.data && response.data.accessToken) {
+        localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem('refreshToken', response.data.refreshToken);
 
-        // Call the onLoginSuccess function to switch to the product screen
         onLoginSuccess();
       } else {
         setError('Invalid credentials');
