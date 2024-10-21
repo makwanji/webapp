@@ -25,13 +25,13 @@ jobs:
         # run: exit 0
         uses: sonarsource/sonarqube-scan-action@v2
         with:
-          # projectBaseDir: backend
+          projectBaseDir: backend
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          # SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          args: >
-            -Dsonar.projectKey=backend
-            -Dsonar.sources=backend
-            -Dsonar.host.url=http://sonar.adnovumlabs.com:9900
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          # args: >
+          #   -Dsonar.projectKey=backend
+          #   -Dsonar.sources=backend
+          #   -Dsonar.host.url=http://sonar.adnovumlabs.com:9900
 
 
 # sonar-scanner \
