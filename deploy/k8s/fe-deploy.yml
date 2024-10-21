@@ -20,7 +20,7 @@ spec:
           image: makwanji/webapp-front:v0.0.7
           imagePullPolicy: Always
           ports:
-            - containerPort: 5432
+            - containerPort: 80
           resources:
             requests:
               cpu: 100m
