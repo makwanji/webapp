@@ -31,6 +31,12 @@ jobs:
           docker build -t makwanji/productservice-db:v1.0.${{ github.run_number }} ./database
           docker push makwanji/productservice-db:v1.0.${{ github.run_number }}
 
+      - name: Install Cosign
+        run: |
+          COSIGN_VERSION=$(curl -s https://api.github.com/repos/sigstore/cosign/releases/latest | jq -r '.tag_name')
+          curl -L "https://github.com/sigstore/cosign/releases/download/${COSIGN_VERSION}/cosign-linux-amd64" -o /usr/local/bin/cosign
+          chmod +x /usr/local/bin/cosign
+
       - name: Sign image using Cosign
         run: |
           cosign sign --identity-token $GITHUB_TOKEN makwanji/productservice-db:v1.0.${{ github.run_number }}
