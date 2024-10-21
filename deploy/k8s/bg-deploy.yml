@@ -17,10 +17,10 @@ spec:
     spec:
       containers:
         - name: ps-background
-          image: makwanji/webapp-back:v0.0.4
+          image: makwanji/webapp-back:v0.0.5
           imagePullPolicy: Always
           ports:
-            - containerPort: 5432
+            - containerPort: 5002
           resources:
             requests:
               cpu: 100m

@@ -4,9 +4,13 @@ metadata:
   name: ps-background-config
   namespace: ps
 data:
-  DB_SERVER: ps-database-service
-  JWT_SECRET: 'testwebapp123'
-  POSTGRES_DB: webapp
-  POSTGRES_USER: 'admin'
+  # DB_HOST: '18.136.147.42'
+  DB_HOST: 'ps-database-service'
+  DB_NAME: webapp
+  DB_USER: 'admin'
   DB_PORT: '5432'
   PORT: '5002'
+  ACCESS_TOKEN_SECRET: 'testwebapp123'
+  REFRESH_TOKEN_SECRET: 'test_jwt_secret_key'
+  DB_PASSWORD: 'admin1234'
+

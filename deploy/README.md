@@ -12,3 +12,6 @@ kubectl create secret docker-registry regcred \
 docker tag webapp-postgres:v0.0.1 makwanji/webapp-postgres:v0.0.1
 docker tag webapp-back:v0.0.4 makwanji/webapp-back:v0.0.4
 docker tag webapp-front:v0.0.7 makwanji/webapp-front:v0.0.7
+
+docker tag webapp-back:v0.0.5 makwanji/webapp-back:v0.0.5 ; docker push makwanji/webapp-back:v0.0.5
+

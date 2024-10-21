@@ -26,6 +26,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: ps-backend-service
+                name: ps-background-service
                 port:
-                  number: 5001
+                  number: 5002
