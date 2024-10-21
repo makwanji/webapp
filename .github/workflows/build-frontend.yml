@@ -39,8 +39,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # - name: SonarQube Scan
+      #   run: exit 0
+
       - name: SonarQube Scan
-        run: exit 0
+        id: fe_stat
+        # run: exit 0
+        uses: sonarsource/sonarqube-scan-action@v2
+        with:
+          args: >
+            -Dsonar.projectKey=frontend
+            -Dsonar.sources=frontend
+            -Dsonar.host.url=http://sonar.adnovumlabs.com:9900
+
 
       # # Optional: You can add other SAST tools like SonarQube or Semgrep for more in-depth scanning
       # - name: SonarQube Scan
