@@ -15,3 +15,5 @@ docker tag webapp-front:v0.0.7 makwanji/webapp-front:v0.0.7
 
 docker tag webapp-back:v0.0.5 makwanji/webapp-back:v0.0.5 ; docker push makwanji/webapp-back:v0.0.5
 
+docker tag webapp-front:v0.0.8 makwanji/webapp-front:v0.0.8 ; docker push makwanji/webapp-front:v0.0.8
+
