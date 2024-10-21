@@ -1,0 +1,33 @@
+name: Kubernetes SCAN
+
+on:
+  push:
+    branches:
+      - main
+      - draft
+    paths:
+      - 'deploy/**'  # Triggers only if there are changes in the 'terraform' subfolder
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Checkov GitHub Action
+        continue-on-error: true
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          # This will add both a CLI output to the console and create a results.sarif file
+          directory: deploy
+          output_format: cli,sarif
+          output_file_path: console,results.sarif
+
+      - name: Upload SARIF file
+        continue-on-error: true
+        uses: github/codeql-action/upload-sarif@v2
+        if: success() || failure()
+        with:
+          sarif_file: results.sarif

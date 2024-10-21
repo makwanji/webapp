@@ -175,16 +175,6 @@ jobs:
                        -t productservice-web:v1.0.${{ github.run_number }} ./frontend # Build from the 'frontend' subfolder
 
       # Step 5: Scan the Docker image for vulnerabilities
-      - name: Run Trivy vulnerability scanner
-        continue-on-error: true
-        uses: aquasecurity/trivy-action@0.20.0
-        with:
-          image-ref: 'productservice-web:v1.0.${{ github.run_number }}'
-          format: 'table'
-          exit-code: '0' # Set to 1 if you want to faild this pipeline
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
 
       # Step 7: Tag the Docker image with the ECR repository URI
       - name: Tag Docker image
@@ -194,7 +184,17 @@ jobs:
       # Step 8: Push the Docker image to AWS ECR
       - name: Push Docker image to ECR
         run: |
-          docker push ${{ secrets.ECR_REPOSITORY_URI }}/productservice-web:v1.0.${{ github.run_number }}
+          docker push
+
+      - name: Run Trivy vulnerability scanner
+        continue-on-error: true
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: '${{ secrets.ECR_REPOSITORY_URI }}/productservice-web:v1.0.${{ github.run_number }}'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
 
   deploy:
     name: Deploy
