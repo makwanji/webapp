@@ -25,14 +25,15 @@ jobs:
           output_format: cli,sarif
           output_file_path: console,results.sarif
 
-      - name: Checkov Scan - helm
+      - name: Checkov Scan - helm (backend)
         continue-on-error: true
         uses: bridgecrewio/checkov-action@v12
         with:
           # This will add both a CLI output to the console and create a results.sarif file
-          directory: deploy/helm
+          directory: deploy/helm/ps-backend
           output_format: cli,sarif
           output_file_path: console,results.sarif
+          var_file: ./deploy/helm/values.dev.yml
 
       - name: Upload SARIF file
         continue-on-error: true
