@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ps-frontend
-          image: makwanji/webapp-front:v0.0.7
+          image: makwanji/webapp-front:v0.0.8
           imagePullPolicy: Always
           ports:
             - containerPort: 80
@@ -32,7 +32,7 @@ spec:
             - name: TZ
               value: "Asia/Singapore"
             - name: REACT_APP_API_URL
-              value: "https://psdemo.adnovumlabs.com:5001"
+              value: "https://psbg-psdemo.adnovumlabs.com"
           # envFrom:
           #   - secretRef:
           #       name: {{ .Values.config.secret }}

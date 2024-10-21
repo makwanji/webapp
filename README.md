@@ -22,8 +22,9 @@ Automated pipelines are set up to build, test, and deploy the application using 
 
 ## **Access Application**
 You can access the live application at:
-App - http://psdev.adnovumlabs.com
-Sonar - http://sonar.adnovumlabs.com:9900/
+- App - https://psdemo.adnovumlabs.com
+- API - https://psbg-psdemo.adnovumlabs.com
+- Sonar - http://sonar.adnovumlabs.com:9900
 
 [![Quality Gate Status](http://sonar.adnovumlabs.com:9900/api/project_badges/measure?project=frontend&metric=alert_status&token=sqb_44ee4c94b2a9b555a6a72ef8dfdd14a5aeacfa20)](http://sonar.adnovumlabs.com:9900/dashboard?id=frontend)
 
@@ -130,8 +131,6 @@ Each subfolder contains a `README.md` file with detailed information on how to r
 
 
 ```bash
-
-
  -
  opensource - securty scanning.
  - explore more secret
@@ -151,5 +150,7 @@ Each subfolder contains a `README.md` file with detailed information on how to r
  -
  - firewall
  -
+- kustomize
+```
 
 
