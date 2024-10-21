@@ -1,7 +1,6 @@
-version: '3.8'
 services:
   backend:
-    image: webapp-back:v0.0.3
+    image: webapp-back:v0.0.4
     container_name: backend
     ports:
       - '5002:5002'
@@ -17,12 +16,12 @@ services:
       - postgres
 
   frontend:
-    image: webapp-front:v0.0.2
+    image: webapp-front:v0.0.6
     container_name: frontend
     ports:
       - '80:80'
     environment:
-      REACT_APP_API_URL: http://18.136.147.42:5002
+      REACT_APP_API_URL: http://psdev.adnovumlabs.com:5002
     depends_on:
       - backend
 

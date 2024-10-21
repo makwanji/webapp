@@ -25,7 +25,7 @@ You can access the live application at:
 App - http://psdev.adnovumlabs.com
 Sonar - http://sonar.adnovumlabs.com:9900/
 
-
+[![Quality Gate Status](http://sonar.adnovumlabs.com:9900/api/project_badges/measure?project=frontend&metric=alert_status&token=sqb_44ee4c94b2a9b555a6a72ef8dfdd14a5aeacfa20)](http://sonar.adnovumlabs.com:9900/dashboard?id=frontend)
 
 ## **Tech Stack**
 
@@ -131,16 +131,7 @@ Each subfolder contains a `README.md` file with detailed information on how to r
 
 ```bash
 
-terrafrom
- - checko
 
- k8s - checoko
- -
- helm
- -
- -
- -
- -
  -
  opensource - securty scanning.
  - explore more secret
@@ -156,15 +147,9 @@ terrafrom
  -
  -
  -
- - repo, app, image, choko,
+ - , , , ,
  -
  - firewall
  -
 
 
-```
-sonar-scanner \
-  -Dsonar.projectKey=backend \
-  -Dsonar.sources=backend \
-  -Dsonar.host.url=http://sonar.adnovumlabs.com:9900 \
-  -Dsonar.token=sqp_31fa610082cc3f40f57d24c12bece969888ce501

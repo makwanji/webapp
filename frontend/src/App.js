@@ -7,7 +7,6 @@ import Dashboard from './components/Dashboard';
 import Product from './components/Product';
 import Ransomware from './components/Ransomware';
 
-
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -33,7 +32,7 @@ function App() {
       {isAuthenticated ? (
         <Router>
           <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard onLogout={handleLogout} />} />
             <Route path="/product" element={<Product />} />
             <Route path="/ransomware" element={<Ransomware />} />
             <Route path="*" element={<Navigate to="/dashboard" />} /> {/* Default route */}
