@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ps-background
+  namespace: ps
+  labels:
+    app: ps-background
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ps-background
+  template:
+    metadata:
+      labels:
+        app: ps-background
+    spec:
+      containers:
+        - name: ps-background
+          image: makwanji/webapp-back:v0.0.4
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5432
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+          env:
+            - name: TZ
+              value: "Asia/Singapore"
+          envFrom:
+            - configMapRef:
+                name: ps-background-config
+            - secretRef:
+                name: ps-background-secret
+          # envFrom:
+          #   - secretRef:
+          #       name: {{ .Values.config.secret }}

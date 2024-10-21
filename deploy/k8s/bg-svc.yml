@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ps-background-service
+  namespace: ps
+  labels:
+    app: ps-background
+spec:
+  selector:
+    app: ps-background
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

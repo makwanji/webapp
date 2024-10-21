@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ps-database
+  namespace: ps
+  labels:
+    app: ps-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ps-database
+  template:
+    metadata:
+      labels:
+        app: ps-database
+    spec:
+      containers:
+        - name: ps-database
+          image: makwanji/webapp-postgres:v0.0.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5432
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+          env:
+            - name: TZ
+              value: "Asia/Singapore"
+            - name: POSTGRES_USER
+              value: "admin"
+            - name: POSTGRES_PASSWORD
+              value: "admin1234"
+            - name: POSTGRES_DB
+              value: "webapp"
+          # envFrom:
+          #   - secretRef:
+          #       name: {{ .Values.config.secret }}
