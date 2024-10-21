@@ -49,6 +49,8 @@ jobs:
           projectBaseDir: backend
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          args: >
+            -Dsonar.web.port: 9900
 
   dep-scan:
     name: Dependency Vulnerability Scan
