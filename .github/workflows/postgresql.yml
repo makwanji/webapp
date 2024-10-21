@@ -47,7 +47,7 @@ jobs:
       - name: Sign image using Cosign
         continue-on-error: true
         run: |
-          echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | ./cosign sign -key /tmp/cosign.key docker.io/makwanji/productservice-db:v1.0.${{ github.run_number }}
+          echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | /usr/local/bin/cosign sign -key /tmp/cosign.key docker.io/makwanji/productservice-db:v1.0.${{ github.run_number }}
 
       # Step 5: Scan the Docker image for vulnerabilities
       - name: Run Trivy vulnerability scanner
