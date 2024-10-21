@@ -26,13 +26,13 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@v2
         with:
           # projectBaseDir: backend
-          # SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           # SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           args: >
             -Dsonar.projectKey=backend
             -Dsonar.sources=backend
             -Dsonar.host.url=http://sonar.adnovumlabs.com:9900
-            -Dsonar.token=sqp_31fa610082cc3f40f57d24c12bece969888ce501
+
 
 # sonar-scanner \
 #   -Dsonar.projectKey=backend \
