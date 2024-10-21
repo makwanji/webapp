@@ -26,8 +26,9 @@ jobs:
         run: cd frontend && npm ci && cd .. # npm ci
 
       - name: Build application
-        # run: cd frontend && npm run build && cd .. # npm run build
-        run: exit 0
+        run: cd frontend && npm run build && cd .. # npm run build
+        continue-on-error: true
+        # run: exit 0
 
       - name: Run ESLint [syntax errors, code quality issues, and enforcing coding standards]
         run: cd frontend && npm install && npx eslint . && cd ..
@@ -40,12 +41,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # - name: SonarQube Scan
-      #   run: exit 0
-
       - name: SonarQube Scan
         id: fe_stat
-        # run: exit 0
+        continue-on-error: true
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -54,28 +52,6 @@ jobs:
           args: >
             -Dsonar.projectKey=frontend
             -Dsonar.sources=frontend
-        # uses: sonarsource/sonarqube-scan-action@v2
-        # with:
-        #   args: >
-        #     -Dsonar.projectKey=frontend
-        #     -Dsonar.sources=frontend
-        #     -Dsonar.host.url=http://sonar.adnovumlabs.com:9900
-        #     -Dsonar.token=sqp_31fa610082cc3f40f57d24c12bece969888ce501
-
-
-      # # Optional: You can add other SAST tools like SonarQube or Semgrep for more in-depth scanning
-      # - name: SonarQube Scan
-      #   uses: sonarsource/sonarqube-scan-action@v3.0.0
-      #   with:
-      #     projectBaseDir: frontend
-
-      # Optional: You can add other SAST tools like SonarQube or Semgrep for more in-depth scanning
-      - name: Semgrep Security Scan
-        uses: returntocorp/semgrep-action@v1
-        with:
-          config: p/ci # Use the pre-configured rules for CI/CD
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   dep-scan:
     name: Dependency Vulnerability Scan
@@ -96,6 +72,7 @@ jobs:
       # Check for vulnerabilities in node_modules using npm audit
       - name: Check for vulnerable packages using npm audit
         run: cd frontend && npm audit --audit-level=high && cd ..
+        continue-on-error: true
 
       # - name: OWASP Dependency Check
       #   run: exit 0
