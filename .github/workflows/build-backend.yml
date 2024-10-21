@@ -47,15 +47,18 @@ jobs:
       - name: SonarQube Scan
         id: bg_stat
         # run: exit 0
-        uses: sonarsource/sonarqube-scan-action@v2
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args: >
             -Dsonar.projectKey=backend
             -Dsonar.sources=backend
-            -Dsonar.host.url=http://sonar.adnovumlabs.com:9900
-            -Dsonar.token=sqp_31fa610082cc3f40f57d24c12bece969888ce501
         # uses: sonarsource/sonarqube-scan-action@v3
         # with:
+            # -Dsonar.host.url=http://sonar.adnovumlabs.com:9900
+            # -Dsonar.token=sqp_31fa610082cc3f40f57d24c12bece969888ce501
         #   # projectBaseDir: backend
         #   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         #   SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
