@@ -53,6 +53,7 @@ jobs:
             -Dsonar.projectKey=backend
             -Dsonar.sources=backend
             -Dsonar.host.url=http://sonar.adnovumlabs.com:9900
+            -Dsonar.token=sqp_31fa610082cc3f40f57d24c12bece969888ce501
         # uses: sonarsource/sonarqube-scan-action@v3
         # with:
         #   # projectBaseDir: backend
