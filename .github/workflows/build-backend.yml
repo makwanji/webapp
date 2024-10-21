@@ -174,16 +174,6 @@ jobs:
                        --build-arg POSTGRES_DB=${{ secrets.POSTGRES_DB }} \
                        -t productservice-app:v1.0.${{ github.run_number }} ./backend # Build from the 'backend' subfolder
 
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.20.0
-        continue-on-error: true
-        with:
-          image-ref: 'productservice-app:v1.0.${{ github.run_number }}'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          trivy-config: trivy.yaml
-          scan-type: image
-
       - name: Tag Docker image
         run: |
           docker tag productservice-app:v1.0.${{ github.run_number }} ${{ secrets.ECR_REPOSITORY_URI }}/productservice-app:v1.0.${{ github.run_number }}
@@ -192,6 +182,17 @@ jobs:
       - name: Push Docker image to ECR
         run: |
           docker push ${{ secrets.ECR_REPOSITORY_URI }}/productservice-app:v1.0.${{ github.run_number }}
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.20.0
+        continue-on-error: true
+        with:
+          image-ref: '${{ secrets.ECR_REPOSITORY_URI }}/productservice-app:v1.0.${{ github.run_number }}'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          # scan-type: image
 
   deploy:
     name: Deploy
