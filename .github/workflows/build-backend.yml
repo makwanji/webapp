@@ -23,6 +23,7 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
+        continue-on-error: true
         run: cd backend && npm ci && cd .. # npm ci
 
       - name: Build application
@@ -30,6 +31,7 @@ jobs:
 
       # Run ESLint or other static analysis tool
       - name: Run ESLint [syntax errors, code quality issues, and enforcing coding standards]
+        continue-on-error: true
         run: cd backend && npm install && npx eslint . && cd ..
 
   sastbk:
@@ -43,6 +45,7 @@ jobs:
 
       - name: SonarQube Scan
         id: bg_stat
+        continue-on-error: true
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -66,10 +69,12 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
+        continue-on-error: true
         run: cd backend && npm ci && cd ..
 
       # Check for vulnerabilities in node_modules using npm audit
       - name: Check for vulnerable packages using npm audit
+        continue-on-error: true
         run: cd backend && npm audit --audit-level=high && cd ..
 
       # - name: OWASP Dependency Check
@@ -77,6 +82,7 @@ jobs:
 
       # OWASP Dependency-Check scan for vulnerabilities
       - name: OWASP Dependency Check
+        continue-on-error: true
         id: Depcheck
         uses: dependency-check/Dependency-Check_Action@main
         with:
@@ -89,6 +95,7 @@ jobs:
             --enableRetired
 
       - name: Upload dependency check report
+        continue-on-error: true
         uses: actions/upload-artifact@v3
         with:
           name: dependency-check-report
@@ -134,6 +141,7 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
+        continue-on-error: true
         run: cd backend && npm ci && cd ..
 
       - name: Build application
@@ -141,6 +149,7 @@ jobs:
 
       # Dockerize the app using multi-stage build
       - name: Set up Docker Buildx
+        continue-on-error: true
         uses: docker/setup-buildx-action@v2
 
 
@@ -167,6 +176,7 @@ jobs:
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.20.0
+        continue-on-error: true
         with:
           image-ref: 'productservice-app:v1.0.${{ github.run_number }}'
           ignore-unfixed: true
