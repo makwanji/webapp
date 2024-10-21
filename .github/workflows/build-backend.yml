@@ -28,34 +28,27 @@ jobs:
       - name: Build application
         run: exit 0 # npm run build
 
+      # Run ESLint or other static analysis tool
+      - name: Run ESLint [syntax errors, code quality issues, and enforcing coding standards]
+        run: cd backend && npm install && npx eslint . && cd ..
+
   sast:
     name: SAST - Static Code Analysis
     runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # Run ESLint or other static analysis tool
-      - name: Run ESLint for code linting and basic vulnerability detection
-        run: cd backend && npm install && npx eslint . && cd ..
+      # - name: SonarQube Scan
+      #   run: exit 0
 
       - name: SonarQube Scan
-        run: exit 0
-
-      # # Optional: You can add other SAST tools like SonarQube or Semgrep for more in-depth scanning
-      # - name: SonarQube Scan
-      #   uses: sonarsource/sonarqube-scan-action@v3.0.0
-      #   with:
-      #     projectBaseDir: backend
-
-      # Optional: You can add other SAST tools like SonarQube or Semgrep for more in-depth scanning
-      - name: Semgrep Security Scan
-        uses: returntocorp/semgrep-action@v1
+        uses: sonarsource/sonarqube-scan-action@v3
         with:
-          config: p/ci # Use the pre-configured rules for CI/CD
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          projectBaseDir: backend
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
   dep-scan:
     name: Dependency Vulnerability Scan

@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   backend:
-    image: webapp-back:v0.0.2
+    image: webapp-back:v0.0.3
     container_name: backend
     ports:
       - '5002:5002'
@@ -17,7 +17,7 @@ services:
       - postgres
 
   frontend:
-    image: webapp-front:v0.0.1
+    image: webapp-front:v0.0.2
     container_name: frontend
     ports:
       - '80:80'
