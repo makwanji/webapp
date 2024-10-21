@@ -152,42 +152,41 @@ jobs:
         continue-on-error: true
         uses: docker/setup-buildx-action@v2
 
-
-      # Step 2: Set up AWS CLI
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Step 3: Log in to AWS ECR
-      - name: Log in to Amazon ECR
-        id: ecr-login
+      - name: Build and push Docker image
         run: |
-          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY_URI }}
+          docker build -t makwanji/productservice-app:v1.0.${{ github.run_number }} ./backend
+          docker push makwanji/productservice-app:v1.0.${{ github.run_number }}
 
-      - name: Build Docker image
+      - name: Install Cosign
         run: |
-          docker build --build-arg POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
-                       --build-arg POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
-                       --build-arg POSTGRES_DB=${{ secrets.POSTGRES_DB }} \
-                       -t productservice-app:v1.0.${{ github.run_number }} ./backend # Build from the 'backend' subfolder
+          COSIGN_VERSION=$(curl -s https://api.github.com/repos/sigstore/cosign/releases/latest | jq -r '.tag_name')
+          curl -L "https://github.com/sigstore/cosign/releases/download/${COSIGN_VERSION}/cosign-linux-amd64" -o /usr/local/bin/cosign
+          chmod +x /usr/local/bin/cosign
 
-      - name: Tag Docker image
-        run: |
-          docker tag productservice-app:v1.0.${{ github.run_number }} ${{ secrets.ECR_REPOSITORY_URI }}/productservice-app:v1.0.${{ github.run_number }}
+        # Ref - https://raesene.github.io/blog/2021/03/21/Trying-out-cosign/
+      - name: place the cosign private key in a file
+        run: 'echo "$COSIGN_KEY" > /tmp/cosign.key'
+        shell: bash
+        env:
+          COSIGN_KEY: ${{secrets.COSIGN_KEY}}
 
-      # Step 8: Push the Docker image to AWS ECR
-      - name: Push Docker image to ECR
+      - name: Sign image using Cosign
+        continue-on-error: true
         run: |
-          docker push ${{ secrets.ECR_REPOSITORY_URI }}/productservice-app:v1.0.${{ github.run_number }}
+          echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | /usr/local/bin/cosign sign -key /tmp/cosign.key docker.io/makwanji/productservice-app:v1.0.${{ github.run_number }}
+
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.20.0
         continue-on-error: true
         with:
-          image-ref: '${{ secrets.ECR_REPOSITORY_URI }}/productservice-app:v1.0.${{ github.run_number }}'
+          image-ref: 'docker.io/makwanji/productservice-app:v1.0.${{ github.run_number }}'
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true
