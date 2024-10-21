@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../utils/axios';
 
 function RansomwareTable() {
   const [ransomware, setransomware] = useState([]);

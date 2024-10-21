@@ -22,7 +22,7 @@ services:
     ports:
       - '80:80'
     environment:
-      REACT_APP_API_URL: http://54.255.190.48:5002
+      REACT_APP_API_URL: http://18.136.147.42:5002
     depends_on:
       - backend
 

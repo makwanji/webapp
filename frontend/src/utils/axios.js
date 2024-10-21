@@ -10,8 +10,8 @@ function isTokenExpired(token) {
 async function refreshToken() {
   const refreshToken = localStorage.getItem('refreshToken');
   try {
-    const response = await axios.post('/api/auth/refresh', {
-      token: refreshToken,
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/refresh`, {
+      refreshToken: refreshToken,
     });
     localStorage.setItem('accessToken', response.data.accessToken);
     return response.data.accessToken;
@@ -30,7 +30,8 @@ apiClient.interceptors.request.use(
   async (config) => {
     let token = localStorage.getItem('accessToken');
 
-    if (isTokenExpired(token)) {
+    if (token && isTokenExpired(token)) {
+      console.log('refreshing token...');
       token = await refreshToken();
     }
 
