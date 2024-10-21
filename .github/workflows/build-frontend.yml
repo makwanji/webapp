@@ -28,6 +28,9 @@ jobs:
       - name: Build application
         run: cd frontend && npm run build && cd .. # npm run build
 
+      - name: Run ESLint [syntax errors, code quality issues, and enforcing coding standards]
+        run: cd frontend && npm install && npx eslint . && cd ..
+
   sast:
     name: SAST - Static Code Analysis
     runs-on: ubuntu-latest
@@ -35,10 +38,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      # Run ESLint or other static analysis tool
-      - name: Run ESLint for code linting and basic vulnerability detection
-        run: cd frontend && npm install && npx eslint . && cd ..
 
       - name: SonarQube Scan
         run: exit 0

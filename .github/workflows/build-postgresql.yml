@@ -1,4 +1,4 @@
-name: Build and Push PostgreSQL to ECR
+name: DevSecOps CI (ProductService - DB)
 
 on:
   push:
