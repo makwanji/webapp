@@ -47,7 +47,7 @@ jobs:
       - name: Sign image using Cosign
         continue-on-error: true
         run: |
-          echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | /usr/local/bin/cosign sign --yes -key /tmp/cosign.key docker.io/makwanji/productservice-db:v1.0.${{ github.run_number }}
+          echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | /usr/local/bin/cosign sign --yes --registry-username='${{ secrets.DOCKER_USERNAME }}' --registry-password='${{ secrets.DOCKER_PASSWORD }}' --key /tmp/cosign.key docker.io/makwanji/productservice-db:v1.0.${{ github.run_number }}
 
       # Step 5: Scan the Docker image for vulnerabilities
       - name: Run Trivy vulnerability scanner
@@ -60,4 +60,32 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
 
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: docker
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Deploy to Kubernetes cluster
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'latest'
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Update kube config
+        run: aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
+
+      - name: Deploy to EKS
+        run: |
+          kubectl set image deployments/ps-database ps-database=docker.io/makwanji/productservice-db:v1.0.${{ github.run_number }} -n ps
+#
 
