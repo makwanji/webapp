@@ -179,7 +179,7 @@ jobs:
       - name: Sign image using Cosign
         continue-on-error: true
         run: |
-          echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | /usr/local/bin/cosign sign -key /tmp/cosign.key docker.io/makwanji/productservice-app:v1.0.${{ github.run_number }}
+          echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | /usr/local/bin/cosign sign --yes -key /tmp/cosign.key docker.io/makwanji/productservice-app:v1.0.${{ github.run_number }}
 
 
       - name: Run Trivy vulnerability scanner

@@ -1,4 +1,4 @@
-name: Kubernetes SCAN
+name: Checkov Scan (Kubernetes files)
 
 on:
   push:
