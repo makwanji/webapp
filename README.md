@@ -52,7 +52,7 @@ In a DevSecOps environment, integrating various security scanning tools into the
 | **Security Level**                    | **Tools Used** | **Options**                                            | **Description**                                                                 |
 |----------------------------------     |------------------------------------------------------ |------------------------------------------------------|---------------------------------------------------------------------------------|
 | **Secret Scan**                       | **[Gitleaks](Gitleaks.md)** | **TruffleHog**, **GitGuardian**        | Scans source code and history to detect sensitive information like secrets and tokens. |
-| **Infrastructure as Code (IaC) Scan** | **Checkov**, **TFLint**                |  **Terrascan**               | Scans Terraform code to detect security vulnerabilities, compliance violations, and misconfigurations. |
+| **Infrastructure as Code (IaC) Scan** | **[Checkov](Checkov.md)**, **TFLint**                |  **Terrascan**               | Scans Terraform code to detect security vulnerabilities, compliance violations, and misconfigurations. |
 | **Application Code Scan (SAST)**      | **SonarQube**| **Bandit**, **Semgrep**               | Static analysis tools to detect code quality issues, vulnerabilities, and potential security flaws in the source code. |
 | **Container/Image Scan**              | **Trivy**| **Clair**, **Grype**                      | Scans Docker images for vulnerabilities and compliance issues.                   |
 | **Deployment Code Scan**              |        | **Kube-bench**, **Kube-hunter**, **Kubescape**       | Scans Kubernetes deployments for security risks, best practices, and compliance checks. |
