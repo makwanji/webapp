@@ -48,7 +48,6 @@ const loadRansomware = async (req, res) => {
   }
 };
 
-
 const getRansomware = async (req, res) => {
   try {
     const ransomwares = await Ransomware.findAll();
@@ -59,8 +58,9 @@ const getRansomware = async (req, res) => {
   }
 };
 
-
 module.exports = {
   loadRansomware,
   getRansomware
 };
+
+
