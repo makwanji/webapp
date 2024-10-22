@@ -1,0 +1,8 @@
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.0 # Specify the latest version
+    hooks:
+      - id: gitleaks
+        args: ["--verbose", "--source=."]
+
+        # gitleaks detect --source=./backend  --report-format=json --report-path=gitleaks-backend-report.json
