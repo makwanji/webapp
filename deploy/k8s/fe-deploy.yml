@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
         - name: ps-frontend
-          image: makwanji/webapp-front:v0.0.8
+          # image: makwanji/webapp-front:v0.0.8 # working
+          image: makwanji/productservice-web:v1.0.4
           imagePullPolicy: Always
           ports:
             - containerPort: 80

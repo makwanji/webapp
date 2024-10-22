@@ -29,7 +29,7 @@ function ProductTable() {
 
   return (
     <div className="container mx-auto mt-10">
-      <h2 className="text-2xl font-bold mb-6">Product Information</h2>
+      <h2 className="text-2xl font-bold mb-6">Product Informations</h2>
       <table className="min-w-full bg-white">
         <thead>
           <tr>
