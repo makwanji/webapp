@@ -1,8 +1,15 @@
 repos:
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.18.0 # Specify the latest version
+    rev: v8.19.0
     hooks:
       - id: gitleaks
-        args: ["--verbose", "--source=."]
+        name: Detect hardcoded secrets
+        # entry: gitleaks protect --verbose --redact --staged
+        # entry: zricethezav/gitleaks protect --verbose --redact --staged
+        # entry: gitleaks detect  --verbose --source ./backend  --report-path gitleaks-report.json
+        entry: gitleaks detect --verbose
 
-        # gitleaks detect --source=./backend  --report-format=json --report-path=gitleaks-backend-report.json
+        # language: node
+        # args: ["--verbose", "--source=./backend"]
+
+
