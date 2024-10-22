@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
+      unique: true,
     },
     extensions: {
       type: DataTypes.STRING,
