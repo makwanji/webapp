@@ -1,0 +1,111 @@
+extends: 'spectral:oas'
+
+rules:
+  # # # Ensure that security schemes are defined (API5: Broken Function Level Authorization)
+  # security-defined:
+  #   description: "Security schemes must be defined for operations."
+  #   message: "Missing security scheme."
+  #   severity: error
+  #   given: "$.paths[*][*].security"
+  #   then:
+  #     field: "security"
+  #     function: truthy
+
+  # require-permissions:
+  #   description: "Ensure x-permissions-required is specified for admin endpoints."
+  #   severity: error
+  #   given: "$.paths.*[get, post, put, delete]"
+  #   then:
+  #     field: "x-permissions-required"
+  #     function: truthy
+
+  # require-headers-or-skip:
+  #   description: "All APIs must have a 'headers' field, or use 'x-skip-headers-check' to bypass this requirement."
+  #   message: "This endpoint is missing 'headers' in the response. Add 'headers' or use 'x-skip-headers-check: true' to skip."
+  #   severity: error
+  #   given: "$.paths[*][*].responses[*]"
+  #   then:
+  #     field: headers
+  #     function: falsy
+  #     functionOptions:
+  #       # Only raise an error if 'x-skip-headers-check' is not present
+  #       truthyPaths:
+  #         - headers
+  #       falsyPaths:
+  #         - "x-skip-headers-check"
+
+
+  require-headers-field:
+    description: "All APIs must include a 'headers' field in responses."
+    message: "The 'headers' field is missing in this response. Add 'headers' to enforce rate limiting."
+    severity: error
+    given: "$.paths[*][*].responses[200,401]"
+    then:
+      field: "headers"
+      function: truthy
+
+  api-rate-limit-check:
+    description: "All APIs must have an x-rate-limit header implemented."
+    message: "The 'x-rate-limit' header is missing in this endpoint."
+    severity: error
+    given: "$.paths[*][*].responses[*].headers"
+    then:
+      field: "x-rate-limit"
+      function: truthy
+
+  # api-rate-limit-check:
+  #   description: "All APIs must include x-rate-limit, x-rate-limit-remaining, and x-rate-limit-reset headers."
+  #   message: "One or more rate limit headers are missing in this endpoint."
+  #   severity: error
+  #   given: "$.paths[*][*].responses[*].headers"
+  #   then:
+  #     function: enumeration
+  #     functionOptions:
+  #       paths:
+  #         - "x-rate-limit"
+  #         - "x-rate-limit-remaining"
+  #         - "x-rate-limit-reset"
+
+
+  # api-uri-format:
+  #   description: "API URI Format MUST adhere to below guidelines"
+  #   message: "API endpoint naming SHOULD follow kebab case, URIs MUST start with a letter, and ensure proper casing when returning a URL."
+  #   severity: error
+  #   given: "$..paths.*"
+  #   then:
+  #     - field: "$.name"
+  #       function: pattern
+  #       functionOptions:
+  #         match: '^[a-z]+(-[a-z]+)*$'
+  #       description: "API endpoint naming SHOULD follow the kebab case."
+  #     - field: "$"
+  #       function: pattern
+  #       functionOptions:
+  #         match: '^[a-zA-Z].*'
+  #       description: "URIs MUST start with a letter."
+  #     - field: "$..responses.*.headers"
+  #       function: pattern
+  #       functionOptions:
+  #         match: '^[A-Z0-9-]+$'
+  #       description: "SHOULD ensure proper casing when returning a URL in an HTTP response header value."
+  api-uri-format:
+    description: "API URI Format MUST adhere to specified guidelines"
+    message: "API endpoint naming MUST follow kebab case, URIs MUST start with a letter, and MUST NOT contain invalid characters."
+    severity: error
+    given: "$..paths.*"
+    then:
+      - field: "$"
+        function: pattern
+        functionOptions:
+          match: "^[a-zA-Z][a-zA-Z0-9/-]*$"
+        description: "URIs MUST start with a letter and can contain alphanumeric characters, hyphens, and slashes."
+      - field: "$"
+        function: pattern
+        functionOptions:
+          match: "^(?!.*[\\$]).*$"
+        description: "URIs MUST NOT contain the dollar sign ($) character."
+      - field: "$"
+        function: pattern
+        functionOptions:
+          match: "^[a-z]+(-[a-z]+)*$"
+        description: "Path segment naming SHOULD follow kebab case."

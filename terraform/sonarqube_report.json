@@ -1,0 +1,132 @@
+[
+  {
+    "ruleId": "CKV_AWS_290",
+    "severity": "MINOR",
+    "type": "VULNERABILITY",
+    "primaryLocation": {
+      "message": "Ensure IAM policies does not allow write access without constraints",
+      "filePath": "/10-add-manager-role.tf",
+      "textRange": {
+        "startLine": 22,
+        "endLine": 22
+      }
+    }
+  },
+  {
+    "ruleId": "CKV_AWS_355",
+    "severity": "MINOR",
+    "type": "VULNERABILITY",
+    "primaryLocation": {
+      "message": "Ensure no IAM policies documents allow \"*\" as a statement's resource for restrictable actions",
+      "filePath": "/10-add-manager-role.tf",
+      "textRange": {
+        "startLine": 22,
+        "endLine": 22
+      }
+    }
+  },
+  {
+    "ruleId": "CKV_AWS_273",
+    "severity": "MINOR",
+    "type": "VULNERABILITY",
+    "primaryLocation": {
+      "message": "Ensure access is controlled through SSO and not AWS IAM defined users",
+      "filePath": "/10-add-manager-role.tf",
+      "textRange": {
+        "startLine": 57,
+        "endLine": 57
+      }
+    }
+  },
+  {
+    "ruleId": "CKV_AWS_40",
+    "severity": "MINOR",
+    "type": "VULNERABILITY",
+    "primaryLocation": {
+      "message": "Ensure IAM policies are attached only to groups or roles (Reducing access management complexity may in-turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.)",
+      "filePath": "/10-add-manager-role.tf",
+      "textRange": {
+        "startLine": 80,
+        "endLine": 80
+      }
+    }
+  },
+  {
+    "ruleId": "CKV_AWS_130",
+    "severity": "MINOR",
+    "type": "VULNERABILITY",
+    "primaryLocation": {
+      "message": "Ensure VPC subnets do not assign public IP by default",
+      "filePath": "/4-subnets.tf",
+      "textRange": {
+        "startLine": 25,
+        "endLine": 25
+      }
+    }
+  },
+  {
+    "ruleId": "CKV_AWS_130",
+    "severity": "MINOR",
+    "type": "VULNERABILITY",
+    "primaryLocation": {
+      "message": "Ensure VPC subnets do not assign public IP by default",
+      "filePath": "/4-subnets.tf",
+      "textRange": {
+        "startLine": 38,
+        "endLine": 38
+      }
+    }
+  },
+  {
+    "ruleId": "CKV_AWS_39",
+    "severity": "MINOR",
+    "type": "VULNERABILITY",
+    "primaryLocation": {
+      "message": "Ensure Amazon EKS public endpoint disabled",
+      "filePath": "/7-eks.tf",
+      "textRange": {
+        "startLine": 25,
+        "endLine": 25
+      }
+    }
+  },
+  {
+    "ruleId": "CKV_AWS_58",
+    "severity": "MINOR",
+    "type": "VULNERABILITY",
+    "primaryLocation": {
+      "message": "Ensure EKS Cluster has Secrets Encryption Enabled",
+      "filePath": "/7-eks.tf",
+      "textRange": {
+        "startLine": 25,
+        "endLine": 25
+      }
+    }
+  },
+  {
+    "ruleId": "CKV_AWS_38",
+    "severity": "MINOR",
+    "type": "VULNERABILITY",
+    "primaryLocation": {
+      "message": "Ensure Amazon EKS public endpoint not accessible to 0.0.0.0/0",
+      "filePath": "/7-eks.tf",
+      "textRange": {
+        "startLine": 25,
+        "endLine": 25
+      }
+    }
+  },
+  {
+    "ruleId": "CKV_AWS_37",
+    "severity": "MINOR",
+    "type": "VULNERABILITY",
+    "primaryLocation": {
+      "message": "Ensure Amazon EKS control plane logging is enabled for all log types",
+      "filePath": "/7-eks.tf",
+      "textRange": {
+        "startLine": 25,
+        "endLine": 25
+      }
+    }
+  }
+]

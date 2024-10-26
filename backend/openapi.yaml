@@ -1,0 +1,508 @@
+openapi: 3.0.0
+info:
+  title: ProductAPI
+  description: >-
+    This is the API documentation for the application handling products and
+    ransomware data.
+  version: 1.0.0
+  contact:
+    name: Dev Team
+    email: makwana.jignesh@gmail.com
+tags:
+  - name: auth
+  - name: product
+  - name: ransomware
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+  - url: https://api.example.com
+    description: Production server
+security:
+  - BearerAuth: []
+paths:
+  /api/auth/login:
+    post:
+      operationId: auth-login
+      tags:
+        - auth
+      summary: User login
+      description: Authenticates a user and returns JWT access and refresh tokens.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userSchemes'
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessToken'
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+        '401':
+          description: Invalid credentials
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+  /api/auth/refresh:
+    post:
+      operationId: auth-refresh
+      tags:
+        - auth
+      summary: Token refresh
+      description: Authenticates a user and returns JWT access and refresh tokens.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                refreshToken:
+                  type: string
+                  description: access token
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                properties:
+                  accessToken:
+                    type: string
+                    description: access token
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+        '401':
+          description: Invalid credentials
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+  /api/auth/register:
+    post:
+      operationId: auth-register
+      tags:
+        - auth
+      summary: register user
+      description: regiser user.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userSchemes'
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    description: access token
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+        '401':
+          description: Invalid credentials
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+  /api/products:
+    get:
+      operationId: products
+      tags:
+        - product
+      summary: Get product list
+      description: Returns a list of products.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/productSchemes'
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+        '401':
+          description: Unauthorized. JWT token missing or invalid.
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+    put:
+      operationId: products-put
+      tags:
+        - product
+      summary: Add Product
+      description: Returns a list of products.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/productSchemes'
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+        '401':
+          description: Unauthorized. JWT token missing or invalid.
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+      x-permissions-required:
+        - admin
+    post:
+      operationId: products-post
+      tags:
+        - product
+      summary: Edit/Update Product
+      description: Returns a list of products.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/productSchemes'
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+        '401':
+          description: Unauthorized. JWT token missing or invalid.
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+    delete:
+      operationId: products-del
+      tags:
+        - product
+      summary: delete Product
+      description: Returns a list of products.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/productSchemes'
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+        '401':
+          description: Unauthorized. JWT token missing or invalid.
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+    patch:
+      operationId: products-patch
+      tags:
+        - product
+      summary: patch Product
+      description: Returns a list of products.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/productSchemes'
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+        '401':
+          description: Unauthorized. JWT token missing or invalid.
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+  /api/pr#oduct/{id}:
+    get:
+      operationId: product-id
+      tags:
+        - product
+      summary: Get product list
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: product id
+          schema:
+            type: number
+      description: Returns a list of products.
+      security:
+        - BearerAuth:
+            - 'read:users'
+            - 'public'
+
+      responses:
+        '200':
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/productSchemes'
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+        '401':
+          description: Unauthorized. JWT token missing or invalid.
+          headers:
+            x-rate-limit:
+              description: The maximum number of allowed requests per hour
+              schema:
+                type: integer
+            x-rate-limit-remaining:
+              description: The number of remaining requests in the current time window
+              schema:
+                type: integer
+            x-rate-limit-reset:
+              description: The time at which the rate limit will reset
+              schema:
+                type: integer
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+  schemas:
+    AccessToken:
+      properties:
+        accessToken:
+          type: string
+          description: access token
+        refreshToken:
+          type: string
+          description: access token
+    productSchemes:
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: integer
+        createdAt:
+          type: string
+          format: date
+        updatedAt:
+          type: string
+          format: date
+    userSchemes:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+      required:
+        - username
+        - password
+        - email

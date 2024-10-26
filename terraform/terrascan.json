@@ -1,0 +1,138 @@
+{
+  "results": {
+    "scan_errors": [
+      {
+        "iac_type": "docker",
+        "directory": "/Users/jig/code/jig/webapp/terraform",
+        "errMsg": "Dockerfile not found in the directory /Users/jig/code/jig/webapp/terraform"
+      },
+      {
+        "iac_type": "terraform",
+        "directory": "/Users/jig/code/jig/webapp/terraform/iam",
+        "errMsg": "directory '/Users/jig/code/jig/webapp/terraform/iam' has no terraform config files"
+      },
+      {
+        "iac_type": "terraform",
+        "directory": "/Users/jig/code/jig/webapp/terraform/values",
+        "errMsg": "directory '/Users/jig/code/jig/webapp/terraform/values' has no terraform config files"
+      },
+      {
+        "iac_type": "cft",
+        "directory": "/Users/jig/code/jig/webapp/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.54.1/darwin_arm64",
+        "errMsg": "error while loading iac file '/Users/jig/code/jig/webapp/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.54.1/darwin_arm64/LICENSE.txt', err: unsupported extension for file /Users/jig/code/jig/webapp/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.54.1/darwin_arm64/LICENSE.txt"
+      },
+      {
+        "iac_type": "cft",
+        "directory": "/Users/jig/code/jig/webapp/terraform/.terraform/providers/registry.terraform.io/hashicorp/awscc/1.16.1/darwin_arm64",
+        "errMsg": "error while loading iac file '/Users/jig/code/jig/webapp/terraform/.terraform/providers/registry.terraform.io/hashicorp/awscc/1.16.1/darwin_arm64/LICENSE.txt', err: unsupported extension for file /Users/jig/code/jig/webapp/terraform/.terraform/providers/registry.terraform.io/hashicorp/awscc/1.16.1/darwin_arm64/LICENSE.txt"
+      },
+      {
+        "iac_type": "cft",
+        "directory": "/Users/jig/code/jig/webapp/terraform",
+        "errMsg": "error while loading iac file '/Users/jig/code/jig/webapp/terraform/a.json', err: failed to find valid Resources key in file: /Users/jig/code/jig/webapp/terraform/a.json"
+      },
+      {
+        "iac_type": "cft",
+        "directory": "/Users/jig/code/jig/webapp/terraform",
+        "errMsg": "error while loading iac file '/Users/jig/code/jig/webapp/terraform/checkov_report.json', err: json: cannot unmarshal array into Go value of type map[string]interface {}"
+      },
+      {
+        "iac_type": "arm",
+        "directory": "/Users/jig/code/jig/webapp/terraform",
+        "errMsg": "error while loading iac file '/Users/jig/code/jig/webapp/terraform/checkov_report.json'. err: unable to parse file /Users/jig/code/jig/webapp/terraform/checkov_report.json"
+      },
+      {
+        "iac_type": "cft",
+        "directory": "/Users/jig/code/jig/webapp/terraform/iam",
+        "errMsg": "error while loading iac file '/Users/jig/code/jig/webapp/terraform/iam/AWSLoadBalancerController.json', err: failed to find valid Resources key in file: /Users/jig/code/jig/webapp/terraform/iam/AWSLoadBalancerController.json"
+      },
+      {
+        "iac_type": "cft",
+        "directory": "/Users/jig/code/jig/webapp/terraform",
+        "errMsg": "error while loading iac file '/Users/jig/code/jig/webapp/terraform/sonarqube_report.json', err: json: cannot unmarshal array into Go value of type map[string]interface {}"
+      },
+      {
+        "iac_type": "arm",
+        "directory": "/Users/jig/code/jig/webapp/terraform",
+        "errMsg": "error while loading iac file '/Users/jig/code/jig/webapp/terraform/sonarqube_report.json'. err: unable to parse file /Users/jig/code/jig/webapp/terraform/sonarqube_report.json"
+      },
+      {
+        "iac_type": "cft",
+        "directory": "/Users/jig/code/jig/webapp/terraform",
+        "errMsg": "error while loading iac file '/Users/jig/code/jig/webapp/terraform/terrascan.json', err: error while resolving intrinsic functions, error invalid JSON: unexpected end of JSON input"
+      },
+      {
+        "iac_type": "arm",
+        "directory": "/Users/jig/code/jig/webapp/terraform",
+        "errMsg": "error while loading iac file '/Users/jig/code/jig/webapp/terraform/terrascan.json'. err: unable to parse file /Users/jig/code/jig/webapp/terraform/terrascan.json"
+      },
+      {
+        "iac_type": "cft",
+        "directory": "/Users/jig/code/jig/webapp/terraform/values",
+        "errMsg": "error while loading iac file '/Users/jig/code/jig/webapp/terraform/values/metrics-server.yaml', err: failed to find valid Resources key in file: /Users/jig/code/jig/webapp/terraform/values/metrics-server.yaml"
+      },
+      {
+        "iac_type": "kustomize",
+        "directory": "/Users/jig/code/jig/webapp/terraform",
+        "errMsg": "kustomization.y(a)ml file not found in the directory /Users/jig/code/jig/webapp/terraform"
+      },
+      {
+        "iac_type": "helm",
+        "directory": "/Users/jig/code/jig/webapp/terraform",
+        "errMsg": "no helm charts found in directory /Users/jig/code/jig/webapp/terraform"
+      }
+    ],
+    "violations": [
+      {
+        "rule_name": "eksControlPlaneLoggingDisabled",
+        "description": "Ensure EKS clusters have control plane logging enabled.",
+        "rule_id": "AC_AWS_0465",
+        "severity": "MEDIUM",
+        "category": "Logging and Monitoring",
+        "resource_name": "eks",
+        "resource_type": "aws_eks_cluster",
+        "module_name": "root",
+        "file": "7-eks.tf",
+        "plan_root": "./",
+        "line": 25
+      },
+      {
+        "rule_name": "vpcFlowLogsNotEnabled",
+        "description": "Ensure VPC flow logging is enabled in all VPCs",
+        "rule_id": "AC_AWS_0369",
+        "severity": "LOW",
+        "category": "Logging and Monitoring",
+        "resource_name": "main",
+        "resource_type": "aws_vpc",
+        "module_name": "root",
+        "file": "2-vpc.tf",
+        "plan_root": "./",
+        "line": 1
+      },
+      {
+        "rule_name": "iamUserManagedPolicyAttachment",
+        "description": "Ensure IAM permissions are not given directly to users",
+        "rule_id": "AC_AWS_0476",
+        "severity": "MEDIUM",
+        "category": "Identity and Access Management",
+        "resource_name": "manager",
+        "resource_type": "aws_iam_user_policy_attachment",
+        "module_name": "root",
+        "file": "10-add-manager-role.tf",
+        "plan_root": "./",
+        "line": 80
+      }
+    ],
+    "skipped_violations": null,
+    "scan_summary": {
+      "file/folder": "/Users/jig/code/jig/webapp/terraform",
+      "iac_type": "terraform",
+      "scanned_at": "2024-10-23 02:43:34.534399 +0000 UTC",
+      "policies_validated": 6,
+      "violated_policies": 3,
+      "low": 1,
+      "medium": 2,
+      "high": 0
+    }
+  }
+}

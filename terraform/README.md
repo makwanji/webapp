@@ -18,3 +18,12 @@ terraform plan -var-file="0-terraform.tfvars"
 #TF Apply
 terraform apply -var-file="0-terraform.tfvars" -auto-approve
 ```
+
+
+## Sonar checko
+
+```bash
+checkov -d . -o json > checkov_report.json
+sonar-scanner
+
+```

@@ -1,38 +1,53 @@
-repos:
-  # - repo: https://github.com/bridgecrewio/checkov.git
-  #   rev: 3.2.269  # You can check the latest version on GitHub or PyPI
-  #   hooks:
-  #     - id: checkov
-  #       name: Checkov IaC Scan
-  #       entry: checkov -d ./terraform
-  #       # language: python
-  #       # types: [terraform, yaml, json]  # Specify the file types to scan
-  #       # files: ^(.*\.(tf|json|yaml|yml))$
-  #       args: ["--output", "json"]  # Use json output format
-  # - repo: https://github.com/gitleaks/gitleaks
-  #   rev: v8.21.1
-  #   hooks:
-  #     - id: gitleaks
+# - repo: local
+#     hooks:
+#       - id: sonar-scanner-frontend
+#         name: SonarQube Scanner (frontend)
+#         entry: |
+#           sonar-scanner -Dsonar.projectKey=frontend -Dsonar.sources=./frontend -Dsonar.host.url=http://sonar.adnovumlabs.com:9900 -Dsonar.login=sqa_66e8f525a41037e7bd1b808c407aedbd5a2e2d87
+#         language: system
+#         files: frontend
+#         pass_filenames: false  # SonarQube works on the entire project, not individual files
+#         stages: [pre-commit]
 
+# - repo: local
+#   hooks:
+#     - id: sonar-scanner-frontend
+#       name: SonarQube Scanner (frontend)
+#       entry: |
+#         sonar-scanner \
+#           -Dsonar.projectKey=frontend \
+#           -Dsonar.sources=./frontend \
+#           -Dsonar.host.url=http://sonar.adnovumlabs.com:9900 \
+#           -Dsonar.login=ssss
+#       language: system
+#       files: frontend
+#       pass_filenames: false  # SonarQube works on the entire project, not individual files
+#       stages: [pre-commit]
+
+repos:
   - repo: local
     hooks:
       - id: sonar-scanner-frontend
         name: SonarQube Scanner (frontend)
         entry: |
-          sonar-scanner -Dsonar.projectKey=frontend -Dsonar.sources=./frontend -Dsonar.host.url=http://sonar.adnovumlabs.com:9900 -Dsonar.login=sqa_66e8f525a41037e7bd1b808c407aedbd5a2e2d87
+          sonar-scanner \
+            -Dsonar.projectKey=frontend \
+            -Dsonar.sources=./frontend \
+            -Dsonar.host.url=http://sonar.adnovumlabs.com:9900 \
+            -Dsonar.login=ssss
         language: system
         files: frontend
         pass_filenames: false  # SonarQube works on the entire project, not individual files
         stages: [pre-commit]
 
-      - id: sonar-scanner-terraform
-        name: SonarQube Scanner (terraform)
-        entry: |
-          sonar-scanner -Dsonar.projectKey=terraform -Dsonar.sources=./terraform -Dsonar.host.url=http://sonar.adnovumlabs.com:9900 -Dsonar.login=sqa_66e8f525a41037e7bd1b808c407aedbd5a2e2d87 -Dsonar.language=tf
-        language: system
-        files: terraform
-        pass_filenames: false  # SonarQube works on the entire project, not individual files
-        stages: [pre-commit]
+      # - id: sonar-scanner-terraform
+      #   name: SonarQube Scanner (terraform)
+      #   entry: |
+      #     sonar-scanner -Dsonar.projectKey=terraform -Dsonar.sources=./terraform -Dsonar.host.url=http://sonar.adnovumlabs.com:9900 -Dsonar.login=sqa_66e8f525a41037e7bd1b808c407aedbd5a2e2d87 -Dsonar.language=tf
+      #   language: system
+      #   files: terraform
+      #   pass_filenames: false  # SonarQube works on the entire project, not individual files
+      #   stages: [pre-commit]
       # - id: owasp-dependency-check
       #   name: OWASP Dependency Check
       #   entry: dependency-check

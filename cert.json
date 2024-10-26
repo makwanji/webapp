@@ -1,0 +1,24 @@
+[
+  {
+    "critical": {
+      "identity": {
+        "docker-reference": "index.docker.io/makwanji/productservice-web"
+      },
+      "image": {
+        "docker-manifest-digest": "sha256:63a810addb2a51d281ab3066ec4b4f69f709c5420a6262da093b6cc190e005a4"
+      },
+      "type": "cosign container image signature"
+    },
+    "optional": {
+      "Bundle": {
+        "SignedEntryTimestamp": "MEUCIEv0ssa3/iqdxEtqoICCfeZjyLVTc2PRGN6s7tkbWpWVAiEA6YHESvKdZjDccIdt5PrJ6R4m74TV0KYnC4t8ibuqr10=",
+        "Payload": {
+          "body": "eyJhcGlWZXJzaW9uIjoiMC4wLjEiLCJraW5kIjoiaGFzaGVkcmVrb3JkIiwic3BlYyI6eyJkYXRhIjp7Imhhc2giOnsiYWxnb3JpdGhtIjoic2hhMjU2IiwidmFsdWUiOiJjNTFhMTMzNWVmYjhkMWE2ZjA3ZWY1MGY5OTcyZmNmODk2OTJjYjdlMDg1ZjFiMzA3YWZlNmY5MjUwNTJkOGM2In19LCJzaWduYXR1cmUiOnsiY29udGVudCI6Ik1FVUNJUUMzY2xzbTBXWTU3d2hNUCtzalhYT25VU0gwMlRseVIzN1RRSisxazlMeTlnSWdLSDVHSDFKbFVLNEswNFlGTVN1TjVZVG5RTFhBU2R6cC9KZTdHSlVlK0tJPSIsInB1YmxpY0tleSI6eyJjb250ZW50IjoiTFMwdExTMUNSVWRKVGlCUVZVSk1TVU1nUzBWWkxTMHRMUzBLVFVacmQwVjNXVWhMYjFwSmVtb3dRMEZSV1VsTGIxcEplbW93UkVGUlkwUlJaMEZGVEc1M1QwUnNWRkZhUW1odVNYSkROa2Q0TWs5WFFYWnVlSGxqZGdwU1dqVkhPR1ZPYVVoT1lrdDRRMWhHVVZvMll6Qm5Na0V3U2s1Q1ZHbHFlRnBQWTBkc1dubG9kakZQTUVaVU5tcGtiQ3RJTVRsVFYzWjNQVDBLTFMwdExTMUZUa1FnVUZWQ1RFbERJRXRGV1MwdExTMHRDZz09In19fX0=",
+          "integratedTime": 1729736198,
+          "logIndex": 143097010,
+          "logID": "c0d23d6ad406973f9559f3ba2d1ca01f84147d8ffc5b8445c224f98b9591801d"
+        }
+      }
+    }
+  }
+]

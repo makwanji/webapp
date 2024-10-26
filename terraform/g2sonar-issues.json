@@ -1,0 +1,88 @@
+{
+  "issues": [
+    {
+      "engineId": "grype",
+      "ruleId": "CVE-2024-9143",
+      "severity": "INFO",
+      "type": "VULNERABILITY",
+      "primaryLocation": {
+        "message": "No description available.",
+        "filePath": "libcrypto3",
+        "textRange": {
+          "startLine": 1,
+          "endLine": 1
+        }
+      }
+    },
+    {
+      "engineId": "grype",
+      "ruleId": "CVE-2024-9143",
+      "severity": "INFO",
+      "type": "VULNERABILITY",
+      "primaryLocation": {
+        "message": "No description available.",
+        "filePath": "libssl3",
+        "textRange": {
+          "startLine": 1,
+          "endLine": 1
+        }
+      }
+    },
+    {
+      "engineId": "grype",
+      "ruleId": "CVE-2023-52356",
+      "severity": "CRITICAL",
+      "type": "VULNERABILITY",
+      "primaryLocation": {
+        "message": "A segment fault (SEGV) flaw was found in libtiff that could be triggered by passing a crafted tiff file to the TIFFReadRGBATileExt() API. This flaw allows a remote attacker to cause a heap-buffer overflow, leading to a denial of service.",
+        "filePath": "tiff",
+        "textRange": {
+          "startLine": 1,
+          "endLine": 1
+        }
+      }
+    },
+    {
+      "engineId": "grype",
+      "ruleId": "CVE-2023-6277",
+      "severity": "MAJOR",
+      "type": "VULNERABILITY",
+      "primaryLocation": {
+        "message": "An out-of-memory flaw was found in libtiff. Passing a crafted tiff file to TIFFOpen() API may allow a remote attacker to cause a denial of service via a craft input with size smaller than 379 KB.",
+        "filePath": "tiff",
+        "textRange": {
+          "startLine": 1,
+          "endLine": 1
+        }
+      }
+    },
+    {
+      "engineId": "grype",
+      "ruleId": "CVE-2015-7313",
+      "severity": "MAJOR",
+      "type": "VULNERABILITY",
+      "primaryLocation": {
+        "message": "LibTIFF allows remote attackers to cause a denial of service (memory consumption and crash) via a crafted tiff file.",
+        "filePath": "tiff",
+        "textRange": {
+          "startLine": 1,
+          "endLine": 1
+        }
+      }
+    },
+    {
+      "engineId": "grype",
+      "ruleId": "CVE-2023-6228",
+      "severity": "MINOR",
+      "type": "VULNERABILITY",
+      "primaryLocation": {
+        "message": "An issue was found in the tiffcp utility distributed by the libtiff package where a crafted TIFF file on processing may cause a heap-based buffer overflow leads to an application crash.",
+        "filePath": "tiff",
+        "textRange": {
+          "startLine": 1,
+          "endLine": 1
+        }
+      }
+    }
+  ]
+}
