@@ -54,16 +54,16 @@ jobs:
 
         # Ref - https://raesene.github.io/blog/2021/03/21/Trying-out-cosign/
       - name: place the cosign private key in a file
-        run: 'echo "$COSIGN_KEY" > /tmp/cosign.key'
+        run: 'echo "$COSIGN_PUB_KEY" > /tmp/cosign.pub'
         shell: bash
         env:
-          COSIGN_KEY: ${{secrets.COSIGN_KEY}}
+          COSIGN_PUB_KEY: ${{secrets.COSIGN_PUB_KEY}}
 
       - name: Verify Signature
         continue-on-error: true
         run: |
-          # cosign verify --key ${{ secrets.COSIGN_KEY_PATH }} kbom.json > signature_verification.txt
           cosign verify-blob --key /tmp/cosign.key --signature kbom.json.sig kbom.json
+          # # cosign verify --key ${{ secrets.COSIGN_KEY_PATH }} kbom.json > signature_verification.txt
 
       - name: send notification if Signature failed
         run: |
@@ -103,12 +103,15 @@ jobs:
         run: kubectl config get-contexts
 
       - name: Generate KBOM Artifact
+        id: generate_kbom_artifact
+        continue-on-error: true
         run: |
           # trivy k8s arn:aws:eks:ap-southeast-1:851725219470:cluster/${{ vars.EKS_CLUSTER_NAME }} --scanners vuln --report summary --disable-node-collector > kbom.json
           # trivy k8s --format json -o kbom.json --disable-node-collector
           trivy k8s arn:aws:eks:ap-southeast-1:851725219470:cluster/${{ vars.EKS_CLUSTER_NAME }} --scanners vuln --skip-check-update --format json -o kbom.json
 
       - name: Save KBOM Artifact
+        if: steps.generate_kbom_artifact.outcome == 'success'
         uses: actions/upload-artifact@v3
         with:
           name: kbom
