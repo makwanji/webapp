@@ -60,22 +60,26 @@ jobs:
           COSIGN_PUB_KEY: ${{secrets.COSIGN_PUB_KEY}}
 
       - name: Verify Signature
-        continue-on-error: true
+        id: verify_signature
+        # continue-on-error: true
         run: |
-          cosign verify-blob --key /tmp/cosign.key --signature kbom.json.sig kbom.json
+          cosign verify-blob --key /tmp/cosign.pub --signature kbom.json.sig kbom.json
           # # cosign verify --key ${{ secrets.COSIGN_KEY_PATH }} kbom.json > signature_verification.txt
 
-      - name: send notification if Signature failed
-        run: |
-          echo "send notification"
-          exit 0
-
       - name: Upload Signature Verification Report
-        continue-on-error: true
+        if: steps.verify_signature.outcome == 'success'
+        # continue-on-error: true
         uses: actions/upload-artifact@v3
         with:
           name: signature-verification-report
           path: signature_verification.txt
+
+      - name: send notification if Signature failed
+        if: steps.verify_signature.outcome != 'success'
+        run: |
+          echo "send notification"
+          exit 0
+
 
 
   generate_kbom:
