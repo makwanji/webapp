@@ -100,18 +100,6 @@ jobs:
           name: kbom
           path: kbom.json
 
-      - name: Scan for Vulnerabilities with Trivy
-        run: |
-          curl -sfL https://aquasecurity.github.io/trivy-repo/install.sh | sh -s -- -b /usr/local/bin
-          trivy image --input kbom.json --severity CRITICAL,HIGH > vulnerability_report.txt
-
-      - name: Upload Vulnerability Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: vulnerability-report
-          path: vulnerability_report.txt
-
-
   # vulnerability_scan:
   #   name: Vulnerability Scan
   #   runs-on: ubuntu-latest
@@ -155,33 +143,53 @@ jobs:
   #         name: misconfiguration-report
   #         path: misconfig_report.txt
 
-  # signature_verification:
-  #   name: Signature Verification
-  #   runs-on: ubuntu-latest
-  #   needs: generate_kbom
-  #   steps:
-  #     - name: Download KBOM Artifact
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: kbom
+  signature_verification:
+    name: Signature Verification
+    runs-on: ubuntu-latest
+    needs: generate_kbom
+    steps:
+      - name: Download KBOM Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: kbom
 
-  #     - name: Sign KBOM with Cosign
-  #       env:
-  #         COSIGN_EXPERIMENTAL: "1"
-  #       run: |
-  #         curl -sSfL https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 -o /usr/local/bin/cosign
-  #         chmod +x /usr/local/bin/cosign
-  #         cosign sign -key ${{ secrets.COSIGN_KEY_PATH }} kbom.json > signature.txt
+      - name: Install Cosign
+        run: |
+          COSIGN_VERSION=$(curl -s https://api.github.com/repos/sigstore/cosign/releases/latest | jq -r '.tag_name')
+          curl -L "https://github.com/sigstore/cosign/releases/download/${COSIGN_VERSION}/cosign-linux-amd64" -o /usr/local/bin/cosign
+          chmod +x /usr/local/bin/cosign
 
-  #     - name: Verify Signature
-  #       run: |
-  #         cosign verify -key ${{ secrets.COSIGN_KEY_PATH }} kbom.json > signature_verification.txt
+        # Ref - https://raesene.github.io/blog/2021/03/21/Trying-out-cosign/
+      - name: place the cosign private key in a file
+        run: 'echo "$COSIGN_KEY" > /tmp/cosign.key'
+        shell: bash
+        env:
+          COSIGN_KEY: ${{secrets.COSIGN_KEY}}
 
-  #     - name: Upload Signature Verification Report
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: signature-verification-report
-  #         path: signature_verification.txt
+
+      - name: Sign image using Cosign
+        continue-on-error: true
+        run: |
+          echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | /usr/local/bin/cosign sign --key ~/.ssh/cosign.key kbom.json > signature.txt
+
+      # - name: Sign KBOM with Cosign
+      #   env:
+      #     COSIGN_EXPERIMENTAL: "1"
+      #   run: |
+      #     curl -sSfL https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 -o /usr/local/bin/cosign
+      #     chmod +x /usr/local/bin/cosign
+      #     cosign sign -key ${{ secrets.COSIGN_KEY_PATH }} kbom.json > signature.txt
+
+      - name: Verify Signature
+        run: |
+          cosign verify -key ~/.ssh/cosign.key kbom.json > signature_verification.txt
+
+      - name: Upload Signature Verification Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: signature-verification-report
+          path: signature_verification.txt
+
 
   # compliance_audit:
   #   name: Compliance Audit
