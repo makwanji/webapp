@@ -100,6 +100,18 @@ jobs:
           name: kbom
           path: kbom.json
 
+      - name: Scan for Vulnerabilities with Trivy
+        run: |
+          curl -sfL https://aquasecurity.github.io/trivy-repo/install.sh | sh -s -- -b /usr/local/bin
+          trivy image --input kbom.json --severity CRITICAL,HIGH > vulnerability_report.txt
+
+      - name: Upload Vulnerability Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: vulnerability-report
+          path: vulnerability_report.txt
+
+
   # vulnerability_scan:
   #   name: Vulnerability Scan
   #   runs-on: ubuntu-latest
