@@ -80,19 +80,19 @@ jobs:
       # - name: OWASP Dependency Check
       #   run: exit 0
 
-      # OWASP Dependency-Check scan for vulnerabilities
-      - name: OWASP Dependency Check
-        continue-on-error: true
-        id: Depcheck
-        uses: dependency-check/Dependency-Check_Action@main
-        with:
-          project: 'ProductServiceAPI'
-          format: 'HTML'
-          out: './dependency-check-report'
-          path: './backend'
-          args: >
-            --failOnCVSS 7
-            --enableRetired
+      # # OWASP Dependency-Check scan for vulnerabilities
+      # - name: OWASP Dependency Check
+      #   continue-on-error: true
+      #   id: Depcheck
+      #   uses: dependency-check/Dependency-Check_Action@main
+      #   with:
+      #     project: 'ProductServiceAPI'
+      #     format: 'HTML'
+      #     out: './dependency-check-report'
+      #     path: './backend'
+      #     args: >
+      #       --failOnCVSS 7
+      #       --enableRetired
 
       - name: Upload dependency check report
         continue-on-error: true
@@ -184,12 +184,13 @@ jobs:
         # continue-on-error: true
         run: |
           echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | /usr/local/bin/cosign sign --yes --key /tmp/cosign.key ghcr.io/makwanji/productservice-app:v1.0.${{ github.run_number }}
+          # echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | /usr/local/bin/cosign sign --yes --key /tmp/cosign.key ghcr.io/makwanji/productservice-db:v1.0.${{ github.run_number }}
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.20.0
         continue-on-error: true
         with:
-          image-ref: 'docker.io/makwanji/productservice-app:v1.0.${{ github.run_number }}'
+          image-ref: 'ghcr.io/makwanji/productservice-app:v1.0.${{ github.run_number }}'
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true
