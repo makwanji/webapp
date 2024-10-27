@@ -63,8 +63,7 @@ jobs:
         id: verify_signature
         # continue-on-error: true
         run: |
-          cosign verify-blob --key /tmp/cosign.pub --signature kbom.json.sig kbom.json
-          # # cosign verify --key ${{ secrets.COSIGN_KEY_PATH }} kbom.json > signature_verification.txt
+          cosign verify-blob --key /tmp/cosign.pub --signature kbom.json.sig kbom.json > kbom_verify.txt
 
       - name: Upload Signature Verification Report
         if: steps.verify_signature.outcome == 'success'
@@ -72,14 +71,13 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: signature-verification-report
-          path: signature_verification.txt
+          path: kbom_verify.txt
 
       - name: send notification if Signature failed
         if: steps.verify_signature.outcome != 'success'
         run: |
           echo "send notification"
           exit 0
-
 
 
   generate_kbom:
@@ -110,8 +108,6 @@ jobs:
         id: generate_kbom_artifact
         continue-on-error: true
         run: |
-          # trivy k8s arn:aws:eks:ap-southeast-1:851725219470:cluster/${{ vars.EKS_CLUSTER_NAME }} --scanners vuln --report summary --disable-node-collector > kbom.json
-          # trivy k8s --format json -o kbom.json --disable-node-collector
           trivy k8s arn:aws:eks:ap-southeast-1:851725219470:cluster/${{ vars.EKS_CLUSTER_NAME }} --scanners vuln --skip-check-update --format json -o kbom.json
 
       - name: Save KBOM Artifact

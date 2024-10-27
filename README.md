@@ -129,3 +129,17 @@ Each subfolder contains a `README.md` file with detailed information on how to r
    - Contains instructions for deploying this application.
    - [Backend README](deploy/README.md)
 
+
+
+### Build
+
+- Successfully genreated [kbom](https://github.com/makwanji/webapp/actions/runs/11537216405/job/32114371548) file
+
+
+## Trivy
+
+```bash
+trivy k8s arn:aws:eks:ap-southeast-1:851725219470:cluster/sit-cmts --scanners vuln --skip-check-update --format json -o kbom.json
+trivy fs --attest --predicate vuln --output predicate.json kbom.json
+trivy fs --skip-update --cache-dir /root/.cache/trivy --format json --output scan-results.json kbom.json
+```

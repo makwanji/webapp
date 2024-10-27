@@ -1,0 +1,6 @@
+{
+  "predicateType": "https://in-toto.io/attestation/v0.1",
+  "predicate": {
+    "scanResults": "successful"
+  }
+}
