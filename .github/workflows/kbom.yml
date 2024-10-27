@@ -123,29 +123,18 @@ jobs:
         env:
           COSIGN_KEY: ${{secrets.COSIGN_KEY}}
 
-      - name: Sign image using Cosign
+      - name: Sign KBOM using Cosign
         continue-on-error: true
         run: |
-          echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | /usr/local/bin/cosign sign --key ~/.ssh/cosign.key kbom.json > signature.txt
+          echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | /usr/local/bin/cosign sign-blob --yes --key /tmp/cosign.key kbom.json > kbom.json.sig
+          # verify
+          # cosign verify-blob --key ~/.ssh/cosign.pub --signature kbom.json.sig kbom.json
 
-      # - name: Sign KBOM with Cosign
-      #   env:
-      #     COSIGN_EXPERIMENTAL: "1"
-      #   run: |
-      #     curl -sSfL https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 -o /usr/local/bin/cosign
-      #     chmod +x /usr/local/bin/cosign
-      #     cosign sign -key ${{ secrets.COSIGN_KEY_PATH }} kbom.json > signature.txt
-
-      - name: Verify Signature
-        run: |
-          cosign verify -key ~/.ssh/cosign.key kbom.json > signature_verification.txt
-
-      - name: Upload Signature Verification Report
+      - name: Upload KBOM Sign signature
         uses: actions/upload-artifact@v3
         with:
-          name: signature-verification-report
-          path: signature_verification.txt
-
+          name: kbom-sign-signature
+          path: kbom.json.sig
 
   # vulnerability_scan:
   #   name: Vulnerability Scan
