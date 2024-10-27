@@ -1,18 +1,14 @@
 repos:
   - repo: local
-    hooks:
-      - id: sonar-scanner-frontend
-        name: SonarQube Scanner (frontend)
-        entry: |
-          sonar-scanner \
-            -Dsonar.projectKey=frontend \
-            -Dsonar.sources=./frontend \
-            -Dsonar.host.url=http://sonar.adnovumlabs.com:9900 \
-            -Dsonar.login=$SONAR_TOKEN
-        language: system
-        files: frontend
-        pass_filenames: false  # SonarQube works on the entire project, not individual files
-        stages: [pre-commit]
+    # hooks:
+      # - id: sonar-scanner-frontend
+      #   name: SonarQube Scanner (frontend)
+      #   entry: |
+      #     sonar-scanner -Dsonar.projectKey=frontend -Dsonar.sources=./frontend -Dsonar.host.url=http://sonar.adnovumlabs.com:9900 -Dsonar.login=$SONAR_TOKEN
+      #   language: system
+      #   files: frontend
+      #   pass_filenames: false  # SonarQube works on the entire project, not individual files
+      #   stages: [pre-commit]
 
       # - id: sonar-scanner-terraform
       #   name: SonarQube Scanner (terraform)
@@ -22,6 +18,7 @@ repos:
       #   files: terraform
       #   pass_filenames: false  # SonarQube works on the entire project, not individual files
       #   stages: [pre-commit]
+
       # - id: owasp-dependency-check
       #   name: OWASP Dependency Check
       #   entry: dependency-check
