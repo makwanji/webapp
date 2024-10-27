@@ -75,9 +75,22 @@ jobs:
           cache: true
           version: v0.56.1
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Update kube config
+        run: aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
+
+      - name: kube config list
+        run: kubectl config get-contexts
+
       - name: Generate KBOM Artifact
         run: |
-          trivy k8s arn:aws:eks:ap-southeast-1:851725219470:cluster/sit-cmts --scanners vuln --report summary --disable-node-collector
+          trivy k8s ${{ secrets.EKS_CLUSTER_NAME }} --scanners vuln --report summary --disable-node-collector
 
       - name: Save KBOM Artifact
         uses: actions/upload-artifact@v3
