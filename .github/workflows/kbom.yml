@@ -32,6 +32,12 @@ jobs:
         with:
           name: kbom
 
+      - name: Download KBOM signature
+        uses: actions/download-artifact@v3
+        continue-on-error: true
+        with:
+          name: kbom-sign-signature
+
       - name: Install Cosign
         uses: sigstore/cosign-installer@v3.7.0
         with:
@@ -46,10 +52,18 @@ jobs:
       #     curl -sSfL https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 -o /usr/local/bin/cosign
       #     chmod +x /usr/local/bin/cosign
 
+        # Ref - https://raesene.github.io/blog/2021/03/21/Trying-out-cosign/
+      - name: place the cosign private key in a file
+        run: 'echo "$COSIGN_KEY" > /tmp/cosign.key'
+        shell: bash
+        env:
+          COSIGN_KEY: ${{secrets.COSIGN_KEY}}
+
       - name: Verify Signature
         continue-on-error: true
         run: |
-          cosign verify --key ${{ secrets.COSIGN_KEY_PATH }} kbom.json > signature_verification.txt
+          # cosign verify --key ${{ secrets.COSIGN_KEY_PATH }} kbom.json > signature_verification.txt
+          cosign verify-blob --key /tmp/cosign.key --signature kbom.json.sig kbom.json
 
       - name: send notification if Signature failed
         run: |
