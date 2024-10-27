@@ -166,6 +166,9 @@ jobs:
     name: Sign image
     runs-on: ubuntu-latest
     needs: docker
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: 'Login to GitHub Container Registry'
         uses: docker/login-action@v1
@@ -217,7 +220,35 @@ jobs:
         with:
           version: 'latest'
 
+      - name: Install Cosign
+        run: |
+          COSIGN_VERSION=$(curl -s https://api.github.com/repos/sigstore/cosign/releases/latest | jq -r '.tag_name')
+          curl -L "https://github.com/sigstore/cosign/releases/download/${COSIGN_VERSION}/cosign-linux-amd64" -o /usr/local/bin/cosign
+          chmod +x /usr/local/bin/cosign
+
+        # Ref - https://raesene.github.io/blog/2021/03/21/Trying-out-cosign/
+      - name: place the cosign private key in a file
+        run: 'echo "$COSIGN_KEY" > /tmp/cosign.key'
+        shell: bash
+        env:
+          COSIGN_KEY: ${{secrets.COSIGN_KEY}}
+
+      - name: Verify Signature
+        id: verify_signature
+        # continue-on-error: true
+        run: |
+          cosign verify --key /tmp/cosign.pub makwanji/productservice-web:v1.0.0
+
+      - name: Upload Signature Verification Report
+        if: steps.verify_signature.outcome == 'success'
+        # continue-on-error: true
+        uses: actions/upload-artifact@v3
+        with:
+          name: signature-verification-report
+          path: kbom_verify.txt
+
       - name: Configure AWS credentials
+        if: steps.verify_signature.outcome == 'success'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -225,9 +256,11 @@ jobs:
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Update kube config
+        if: steps.verify_signature.outcome == 'success'
         run: aws eks update-kubeconfig --name ${{ vars.EKS_CLUSTER_NAME }} --region ${{ vars.AWS_REGION }}
 
       - name: Deploy to EKS
+        if: steps.verify_signature.outcome == 'success'
         run: |
           kubectl set image deployments/ps-background ps-background=ghcr.io/makwanji/productservice-app:v1.0.${{ github.run_number }} -n ps
 #
