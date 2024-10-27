@@ -3,10 +3,10 @@ name: DevSecOps CI (ProductService - API)
 on:
   push:
     branches:
-      - main  # You can change this to the branch where you want the action to trigger
+      - main
       - draft
     paths:
-      - 'backend/**'  # Triggers only if there are changes in the 'productservice-webse' subfolder
+      - 'backend/**'
   workflow_dispatch:
 
 jobs:
