@@ -90,7 +90,7 @@ jobs:
 
       - name: Generate KBOM Artifact
         run: |
-          trivy k8s ${{ secrets.EKS_CLUSTER_NAME }} --scanners vuln --report summary --disable-node-collector
+          trivy k8s arn:aws:eks:***:851725219470:cluster/${{ secrets.EKS_CLUSTER_NAME }} --scanners vuln --report summary --disable-node-collector > kbom.json
 
       - name: Save KBOM Artifact
         uses: actions/upload-artifact@v3
