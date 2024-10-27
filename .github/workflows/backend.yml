@@ -209,7 +209,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    needs: docker
+    needs: sign
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -227,11 +227,11 @@ jobs:
           chmod +x /usr/local/bin/cosign
 
         # Ref - https://raesene.github.io/blog/2021/03/21/Trying-out-cosign/
-      - name: place the cosign private key in a file
-        run: 'echo "$COSIGN_KEY" > /tmp/cosign.key'
+      - name: place the cosign public key in a file
+        run: 'echo "$COSIGN_PUB_KEY" > /tmp/cosign.pub'
         shell: bash
         env:
-          COSIGN_KEY: ${{secrets.COSIGN_KEY}}
+          COSIGN_PUB_KEY: ${{secrets.COSIGN_PUB_KEY}}
 
       - name: Verify Signature
         id: verify_signature
