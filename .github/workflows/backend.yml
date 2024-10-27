@@ -157,7 +157,7 @@ jobs:
         run: |
           docker build -t makwanji/productservice-app:v1.0.${{ github.run_number }} ./backend
           docker tag makwanji/productservice-app:v1.0.${{ github.run_number }} ghcr.io/makwanji/productservice-app:v1.0.${{ github.run_number }}
-          ghcr.io/makwanji/productservice-app:v1.0.${{ github.run_number }}
+          docker push ghcr.io/makwanji/productservice-app:v1.0.${{ github.run_number }}
 
   sign:
     name: Sign image
@@ -178,10 +178,9 @@ jobs:
           COSIGN_KEY: ${{secrets.COSIGN_KEY}}
 
       - name: Sign image using Cosign
-        continue-on-error: true
+        # continue-on-error: true
         run: |
-          # echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | /usr/local/bin/cosign sign --yes --registry-username='${{ secrets.DOCKER_USERNAME }}' --registry-password='${{ secrets.DOCKER_PASSWORD }}' --key ~/.ssh/cosign.key docker.io/makwanji/productservice-db:v1.0.2
-          echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | /usr/local/bin/cosign sign --yes --registry-username='${{ secrets.DOCKER_USERNAME }}' --registry-password='${{ secrets.DOCKER_PASSWORD }}' --key /tmp/cosign.key docker.io/makwanji/productservice-app:v1.0.${{ github.run_number }}
+          echo -n "${{secrets.COSIGN_KEY_PASSPHRASE}}" | /usr/local/bin/cosign sign --yes --key /tmp/cosign.key ghcr.io/makwanji/productservice-app:v1.0.${{ github.run_number }}
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.20.0
@@ -197,7 +196,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    needs: docker
+    needs: docker, sign
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
