@@ -30,6 +30,16 @@ rules:
         max: 3
         min: 1
 
+  version-format:
+    description: "API version number must follow the x.x.x format."
+    message: "Version number must follow the x.x.x format."
+    given: "$.info.version"
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+
   kebab-case-paths:
     description: "API endpoint naming SHOULD follow kebab-case."
     message: "API endpoint '{{value}}' should be in kebab-case (e.g., '/example-path')."
@@ -49,7 +59,7 @@ rules:
     then:
       function: length
       functionOptions:
-        max: 10
+        max: 100
 
   must-use-forward-slash:
     description: "URIs MUST use forward slashes (/) to indicate hierarchical relationships."

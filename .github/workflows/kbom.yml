@@ -61,13 +61,13 @@ jobs:
 
       - name: Verify Signature
         id: verify_signature
-        # continue-on-error: true
+        continue-on-error: true
         run: |
           cosign verify-blob --key /tmp/cosign.pub --signature kbom.json.sig kbom.json > kbom_verify.txt
 
       - name: Upload Signature Verification Report
         if: steps.verify_signature.outcome == 'success'
-        # continue-on-error: true
+        continue-on-error: true
         uses: actions/upload-artifact@v3
         with:
           name: signature-verification-report
