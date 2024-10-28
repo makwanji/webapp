@@ -14,9 +14,6 @@ spec:
       labels:
         app: {{ .Values.app.name }}
     spec:
-      securityContext:
-        runAsUser: {{ .Values.podSecurityContext.runAsUser }}
-        runAsGroup: {{ .Values.podSecurityContext.runAsGroup }}
       containers:
         - name: {{ .Values.app.name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -52,3 +49,5 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ .Values.config.secret }}
+            - configMapRef:
+                name: {{ .Values.config.configmap }}

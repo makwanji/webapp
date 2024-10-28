@@ -4,7 +4,7 @@ app:
 replicas: 1
 image:
   repository: makwanji/productservice-app
-  tag: v1.0.0
+  tag: v1.0.4
   pullPolicy: Always
 podSecurityContext:
   runAsUser: 1000690000
@@ -30,5 +30,8 @@ livenessProbe:
   initialDelaySeconds: 20
   timeoutSeconds: 5
 config:
-  secret: ps-backend
+  secret: ps-background-secret
+  configmap: ps-background-config
 appport: 5001
+
+

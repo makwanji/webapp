@@ -20,7 +20,7 @@ servers:
 security:
   - BearerAuth: []
 paths:
-  /api/auth/login:
+  /api/auth/login-1:
     post:
       operationId: auth-login
       tags:
@@ -406,7 +406,7 @@ paths:
               description: The time at which the rate limit will reset
               schema:
                 type: integer
-  /api/pr#oduct/{id}:
+  /api/prod-uct/{id}:
     get:
       operationId: product-id
       tags:
@@ -421,9 +421,9 @@ paths:
             type: number
       description: Returns a list of products.
       security:
-        - BearerAuth:
-            - 'read:users'
-            - 'public'
+        - BearerAuth: []
+            # - 'read:users'
+            # - 'public'
 
       responses:
         '200':
