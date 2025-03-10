@@ -143,3 +143,11 @@ trivy k8s arn:aws:eks:ap-southeast-1:851725219470:cluster/sit-cmts --scanners vu
 trivy fs --attest --predicate vuln --output predicate.json kbom.json
 trivy fs --skip-update --cache-dir /root/.cache/trivy --format json --output scan-results.json kbom.json
 ```
+
+
+
+## Start server
+
+```bash
+docker-compose --env-file .env up db
+```
